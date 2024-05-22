@@ -7,7 +7,10 @@ const messagesSlice = createSlice({
   },
   reducers: {
     setMessages(state, action) {
-      action.payload.map((el) => state.messages.push(el))
+      return {
+        ...state,
+        messages: [...state.messages, action.payload]
+      }
     },
   }
 })

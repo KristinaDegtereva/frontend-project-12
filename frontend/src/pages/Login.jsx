@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
 import { Formik, Field, Form , useFormik} from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
@@ -29,8 +28,7 @@ const Login = () => {
     validationSchema: formSchema,
     onSubmit: async (values) => {
       try {
-        const { data } = await axios.post('/api/v1/login', 
-        { username: 'admin', password: 'admin' });
+        const { data } = await axios.post('/api/v1/login', values);
         if (data.token) {
           localStorage.setItem('user', data);
           addToken(data.token);

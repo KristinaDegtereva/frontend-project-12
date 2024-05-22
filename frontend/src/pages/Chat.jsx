@@ -1,9 +1,9 @@
-import react, { useEffect, useState, useSyncExternalStore } from "react";
+import React, { useEffect, useState, useSyncExternalStore } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { setChannels } from "../slices/channelSlice";
 import Header from "../components/Header";
-import FieldMessage from "../components/Messages";
+import Messages from "../components/FieldMessages";
 import Channels from "../components/Channels";
 import { setMessages } from '../slices/messagesSlice';
 
@@ -20,7 +20,6 @@ const Chat = () => {
       }})
     .then((response) => {
       dispatch(setChannels(response.data));
-      // console.log(response.data); // =>[{ id: '1', name: 'general', removable: false }, ...]
     })
     .catch((e) => {
       console.log(e)
@@ -34,7 +33,6 @@ const Chat = () => {
       },
       }).then((response) => {
         dispatch(setMessages(response.data))
-        // console.log(response.data); // =>[{ id: '1', body: 'text message', channelId: '1', username: 'admin }, ...]
       })
       .catch((e) => {
         console.log(e)
@@ -53,7 +51,7 @@ const Chat = () => {
         <div className="container h-100 my-4 overflow-hidden rounded shadow">
           <div className="row h-100 bg-white flex-md-row">
             <Channels />
-            <FieldMessage />
+            <Messages />
           </div>
         </div>
       </div>

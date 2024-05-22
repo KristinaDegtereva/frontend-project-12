@@ -1,8 +1,26 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setCurrentChannel } from '../slices/currentChannelSlice'
 
 const Channels = () => {
+  const [activeChannel, setActiveChannel] = useState(null);
+  const dispatch = useDispatch();
   const channels = useSelector((state) => state.channels.channels);
+
+  const handleChannel = (id) => {
+    setActiveChannel(id)
+  }
+
+  useEffect(() => {
+    const updateChannel = channels.filter((el) => el.id === activeChannel);
+    dispatch(setCurrentChannel(...updateChannel))
+  }, [activeChannel])
+
+  useEffect(() => {
+    if (channels.length > 0) {
+      setActiveChannel(channels[0].id)
+    }
+  }, [channels])
 
   return (
     <div className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
@@ -29,14 +47,14 @@ const Channels = () => {
         id="channels-box"
         className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block"
       >
-        {channels.map((channel, index) => {
+        {channels.map((channel) => {
           return (
             <li className="nav-item w-100" key={channel.id}>
               <button
                 type="button"
-                className={`w-100 rounded-0 text-start btn ${
-                  index === 0 && "btn-secondary"
-                }`}
+                className={`w-100 rounded-0 text-start btn ${Number(activeChannel) === Number(channel.id) && "btn-secondary"
+                  }`}
+                onClick={() => handleChannel(channel.id)}
               >
                 <span className="me-1">#</span>
                 {channel.name}

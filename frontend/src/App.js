@@ -8,6 +8,7 @@ import {
 import Login from './pages/Login.jsx';
 import Chat from './pages/Chat.jsx';
 import NotFound from './pages/NotFound.jsx';
+import Registration from './components/Registration.jsx'
 import { useSelector } from 'react-redux';
 
 
@@ -22,6 +23,7 @@ const App = () => {
         <Route path='*' element={<NotFound />} />
         <Route path="/" element={ isAuthorized ? <Chat /> : <Login />}/>
         <Route path='/login' element={<Login />} />
+        <Route path="/signup" element={<Registration />} />
       </Routes>
       </BrowserRouter>
     </div>
