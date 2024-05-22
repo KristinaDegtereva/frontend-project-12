@@ -1,19 +1,25 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { useFormik } from 'formik';
+import ReactDOM from 'react-dom';
+import { Formik, Field, Form , useFormik} from 'formik';
 import * as Yup from 'yup';
-import { Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import logo from '../components/logo.jpeg';
+import { useDispatch } from 'react-redux';
+import { setToken, setUserName } from '../slices/authSlice';
+import logo from '../images/logo.jpeg';
 
 const formSchema = Yup.object({
   username: Yup.string().required('Обязательное поле'),
   password: Yup.string().required('Обязательное поле'),
 });
 
-const LoginForm = () => {
+const Login = () => {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
+  const dispatch = useDispatch();
+
+  const addToken = (token) => dispatch(setToken(token));
+  const addUserName = (name) => dispatch(setUserName(name));
 
   const formik = useFormik({
     initialValues: {
@@ -22,85 +28,91 @@ const LoginForm = () => {
     },
     validationSchema: formSchema,
     onSubmit: async (values) => {
-      setError(null);
-      console.log('Submitting form', values); // Отладка
       try {
-        const responce = await axios.post('/api/v1/login', values);
-        console.log('Response from server:', responce.data); // Отладка
-        const { token } = responce.data;
-        console.log('Token:', token); // Отладка
-        localStorage.setItem('token', token);
-        navigate('/');
-      } catch (err) {
-        console.error('Error:', err); // Отладка
-        setError('Неправильное имя пользователя или пароль');
+        const { data } = await axios.post('/api/v1/login', 
+        { username: 'admin', password: 'admin' });
+        if (data.token) {
+          localStorage.setItem('user', data);
+          addToken(data.token);
+          addUserName(data.username);
+          navigate('/')
+        } else {
+          setError(true)
+        }
+      }
+      catch (error) {
+        console.error('Ошибка при отправке запроса:', error);
+        setError(true)
       }
     },
   });
 
   return (
-    <Form onSubmit={formik.handleSubmit} className="col-12 col-md-8 col-xxl-6">
-      <h1 className="text-center mb-4">Войти</h1>
-      {error && <div className="alert alert-danger">{error}</div>}
-      <Form.Group controlId="username" className="form-floating mb-3">
-        <Form.Label>Имя пользователя</Form.Label>
-        <Form.Control
-          type="text"
-          name="username"
-          onChange={formik.handleChange}
-          value={formik.values.username}
-          isInvalid={formik.touched.username && !!formik.errors.username}
-          placeholder="Ваш ник"
-        />
-        {formik.errors.username && formik.touched.username && (
-          <Form.Control.Feedback type="invalid">
-            {formik.errors.username}
-          </Form.Control.Feedback>
-        )}
-      </Form.Group>
-      <Form.Group controlId="password" className="form-floating mb-4">
-        <Form.Label>Пароль</Form.Label>
-        <Form.Control
-          type="password"
-          name="password"
-          onChange={formik.handleChange}
-          value={formik.values.password}
-          isInvalid={formik.touched.password && !!formik.errors.password}
-          placeholder="Пароль"
-        />
-        {formik.errors.password && formik.touched.password && (
-          <Form.Control.Feedback type="invalid">
-            {formik.errors.password}
-          </Form.Control.Feedback>
-        )}
-      </Form.Group>
-      <Button type="submit" className="w-100 mb-3 btn btn-outline-primary">Войти</Button>
-    </Form>
-  );
-};
-
-const Login = () => {
-  return (
-    <div className="container-fluid h-100">
-      <div className="row justify-content-center align-content-center h-100">
-        <div className="col-12 col-md-8 col-xxl-6">
-          <div className="card shadow-sm">
-            <div className="card-body row p-5">
-              <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
-                <img src={logo} className="rounded-circle" alt="Войти" />
-              </div>
-              <LoginForm />
+    <div className="h-100">
+      <div className='h-100' id='chat'>
+        <div className='d-flex flex-column h-100'>
+          <nav className='shadow-sm navbar navbar-expand-lg navbar-light bg-white'>
+            <div className="container">
+              <a href="/" className="navbar-brand">
+                Hexlet Chat
+              </a>
             </div>
-            <div className="card-footer p-4">
-              <div className="text-center">
-                <span>Нет аккаунта?</span> <a href="/">Регистрация</a>
+          </nav>
+          <div className="container-fluid h-100">
+            <div className="row justify-content-center align-content-center h-100">
+              <div className="col-12 col-md-8 col-xxl-6">
+                <div className="card shadow-sm">
+                  <div className="card-body row p-5">
+                    <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
+                      <img src={logo} className="rounded-circle" alt="Войти"></img>
+                    </div>
+                    <form className='col-12 col-md-6 mt-3 mt-mb-0' onSubmit={formik.handleSubmit}>
+                      <h1 className='text-center mb-4'>Войти</h1>
+                      <div className="form-group form-floating mb-3">
+                        <input
+                          type="username"
+                          name="username"
+                          className={`form-control ${error ? 'is-invalid': ''}`}
+                          onChange={formik.handleChange}
+                          value={formik.values.username}
+                          autoComplete='username'
+                        />
+                        <label htmlFor="email">Ваш ник</label>
+                      </div>
+                      <div className="form-group form-floating mb-4">
+                        <input
+                          type="password"
+                          name="password"
+                          className={`form-control ${error ? 'is-invalid': ''}`}
+                          onChange={formik.handleChange}
+                          value={formik.values.password}
+                          autoComplete='password'
+                        />
+                        <label htmlFor="password">Пароль</label>
+                        { error && (
+                          <div class="invalid-tooltip">
+                            Неверные имя пользователя или пароль
+                          </div>
+                        )}
+                      </div>
+                      <button type='submit' className='w-100 mb-3 btn btn-outline-primary'>Log in</button>
+                    </form>
+                  </div>
+
+                  <div className="card-footer p-4">
+                    <div className="text-center">
+                      <span>Нет аккаунта? </span>
+                      <a href='/signup'>Регистрация</a>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 export default Login;
