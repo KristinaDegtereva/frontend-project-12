@@ -3,31 +3,47 @@ import InputField from "./Input";
 import { useDispatch, useSelector } from "react-redux";
 import Messages from "./Messages";
 import { setMessages } from "../slices/messagesSlice";
+import { setChannels } from "../slices/channelSlice";
 import { io } from 'socket.io-client';
 
 const FieldMessages = () => {
   const currentChannel = useSelector((state) => state.currentChannel.currentChannel)
-  const userName = useSelector((state) => state.user.userName);
   const messages = useSelector(state => state.messages.messages)
-  const token = useSelector((state) => state.user.token);
+  const [messagesLocal, setMessagesLocal] = useState(null)
+  const [updateChannel, setUpdateChannel] = useState(null);
 
   const dispatch = useDispatch();
-  const [messagesLocal, setMessagesLocal] = useState(null)
+
+  const messageOfChannel = messages.flat().filter((el) => el.channelId === currentChannel.id)
 
   useEffect(() => {
     const socket = io();
     socket.on('newMessage', (payload) => {
-    setMessagesLocal(payload)
+      setMessagesLocal(payload)
     });
 
     return (next) => (action) => next(action);
-}, [])
+  }, [])
 
   useEffect(() => {
     if (messagesLocal) {
       dispatch(setMessages(messagesLocal))
     }
-  },[messagesLocal])
+  }, [messagesLocal])
+
+  useEffect(() => {
+    const socket = io();
+    socket.on('newChannel', (payload) => {
+    setUpdateChannel(payload)
+    });
+    return (next) => (action) => next(action);
+  }, [])
+
+  useEffect(() => {
+    if (updateChannel) {
+      dispatch(setChannels(updateChannel))
+    }
+  },[updateChannel])
 
   return (
     <>
@@ -43,12 +59,12 @@ const FieldMessages = () => {
             id="messages-box"
             className="chat-messages overflow-auto px-5"
           >
-            { messages.flat().length > 0 && (
-              messages.flat().map((el) => {
+            {messageOfChannel.flat().length > 0 && (
+              messages.flat().filter((el) => el.channelId === currentChannel.id).map((el) => {
                 return (
-                <Messages username={el.username} message={el.body} key={el.id}/> 
-              )
-            })
+                  <Messages username={el.username} message={el.body} key={el.id} />
+                )
+              })
             )}
           </div>
           <InputField channelId={currentChannel && currentChannel.id} />

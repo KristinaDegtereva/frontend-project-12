@@ -2,18 +2,15 @@ import {
   Routes,
   Route,
   BrowserRouter,
-  Navigate,
-  useNavigate,
 } from 'react-router-dom';
 import Login from './pages/Login.jsx';
 import Chat from './pages/Chat.jsx';
 import NotFound from './pages/NotFound.jsx';
 import Registration from './components/Registration.jsx'
-import { useSelector } from 'react-redux';
 
 
 const App = () => {
-  const token = useSelector(state => state.user.token);
+  const token = localStorage.getItem('token')
   const isAuthorized = token ? true : false;
 
   return (

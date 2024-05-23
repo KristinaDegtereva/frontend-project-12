@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useSyncExternalStore } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 import { setChannels } from "../slices/channelSlice";
 import Header from "../components/Header";
@@ -8,8 +8,7 @@ import Channels from "../components/Channels";
 import { setMessages } from '../slices/messagesSlice';
 
 const Chat = () => {
-  const token = useSelector((state) => state.user.token);
-  const userName = useSelector((state) => state.user.userName);
+  const token = localStorage.getItem('token');
 
   const dispatch = useDispatch();
 
@@ -17,13 +16,14 @@ const Chat = () => {
     await axios.get("/api/v1/channels", {
       headers: {
         Authorization: `Bearer ${token}`,
-      }})
-    .then((response) => {
-      dispatch(setChannels(response.data));
+      }
     })
-    .catch((e) => {
-      console.log(e)
-    })
+      .then((response) => {
+        dispatch(setChannels(response.data));
+      })
+      .catch((e) => {
+        console.log(e)
+      })
   }
 
   const getMessages = async (token) => {
@@ -31,9 +31,9 @@ const Chat = () => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      }).then((response) => {
-        dispatch(setMessages(response.data))
-      })
+    }).then((response) => {
+      dispatch(setMessages(response.data))
+    })
       .catch((e) => {
         console.log(e)
       })
@@ -45,18 +45,20 @@ const Chat = () => {
   }, [token]);
 
   return (
-    <div className="h-100" id="chat">
-      <div className="d-flex flex-column h-100">
-        <Header />
-        <div className="container h-100 my-4 overflow-hidden rounded shadow">
-          <div className="row h-100 bg-white flex-md-row">
-            <Channels />
-            <Messages />
+    <>
+      <div className="h-100" id="chat">
+        <div className="d-flex flex-column h-100">
+          <Header />
+          <div className="container h-100 my-4 overflow-hidden rounded shadow">
+            <div className="row h-100 bg-white flex-md-row">
+              <Channels />
+              <Messages />
+            </div>
           </div>
         </div>
+        <div className="Toastify"></div>
       </div>
-      <div className="Toastify"></div>
-    </div>
+    </>
   );
 };
 

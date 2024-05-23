@@ -5,8 +5,7 @@ const Messages = ({ username, message}) => {
   return (
     <div className="text-break mb-2">
       <b>{ username }</b>
-      : 
-      { message }
+      : {'\u00A0'}{ message }
     </div>
   )
 }

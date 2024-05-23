@@ -7,7 +7,10 @@ const channelsSlice = createSlice({
   },
   reducers: {
     setChannels(state, action) {
-      action.payload.map((el) => state.channels.push(el))
+      return {
+        ...state,
+        channels: [...state.channels, action.payload]
+      }
     },
   }
 })

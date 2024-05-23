@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import axios from "axios";
-import { setMessages } from "../slices/messagesSlice";
 
 const Input = ({ channelId }) => {
   const [message, setMessage] = useState("");
   const [disabled, setDisabled] = useState(true)
-  const userName = useSelector((state) => state.user.userName);
-  const token = useSelector((state) => state.user.token);
+  const userName = localStorage.getItem('username');
+  const token = localStorage.getItem('token');
+
   const dispatch = useDispatch();
 
   const handleMessage = (e) => {
@@ -19,6 +19,7 @@ const Input = ({ channelId }) => {
       setMessage('')
     }
   }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     const newMessage = { body: message, channelId: channelId, username: userName };

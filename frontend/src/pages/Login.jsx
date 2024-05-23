@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { Formik, Field, Form , useFormik} from 'formik';
+import { useFormik} from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -30,7 +30,8 @@ const Login = () => {
       try {
         const { data } = await axios.post('/api/v1/login', values);
         if (data.token) {
-          localStorage.setItem('user', data);
+          localStorage.setItem('username', data.username);
+          localStorage.setItem('token', data.token);
           addToken(data.token);
           addUserName(data.username);
           navigate('/')
@@ -88,7 +89,7 @@ const Login = () => {
                         />
                         <label htmlFor="password">Пароль</label>
                         { error && (
-                          <div class="invalid-tooltip">
+                          <div className="invalid-tooltip">
                             Неверные имя пользователя или пароль
                           </div>
                         )}
