@@ -1,51 +1,51 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { setCurrentChannel } from "../slices/currentChannelSlice";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCurrentChannel } from '../slices/currentChannelSlice';
 
 const CreateChannel = ({ setShowModal, setActiveChannel }) => {
   const [error, setError] = useState(false);
-  const [errName, setErrorName] = useState("");
-  const [channelName, setChannelName] = useState("");
+  const [errName, setErrorName] = useState('');
+  const [channelName, setChannelName] = useState('');
   const channels = useSelector((state) => state.channels.channels);
 
   const dispatch = useDispatch();
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
 
   const closeModal = (e) => {
     e.stopPropagation();
-    const target = e.target.closest(".modal-content");
+    const target = e.target.closest('.modal-content');
     if (!target) {
       setShowModal(false);
     }
   };
 
   const close = () => {
-    setShowModal(false)
-  }
+    setShowModal(false);
+  };
 
   const handleInput = (e) => {
-    const isExistChannel = channels.flat().find((el) => el.name == e.target.value)
+    const isExistChannel = channels.flat().find((el) => el.name === e.target.value);
 
     setChannelName(e.target.value);
     if (e.target.value.length < 3 || e.target.value.length > 20) {
       setError(true);
-      setErrorName("От 3 до 20 символов");
+      setErrorName('От 3 до 20 символов');
     } else if (isExistChannel) {
       setError(true);
-      setErrorName("Такой канал существует");
+      setErrorName('Такой канал существует');
     } else {
-      setError(false)
-      setErrorName('')
+      setError(false);
+      setErrorName('');
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-      try {
+    try {
       const newChannel = { name: channelName };
       axios
-        .post("/api/v1/channels", newChannel, {
+        .post('/api/v1/channels', newChannel, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -55,8 +55,8 @@ const CreateChannel = ({ setShowModal, setActiveChannel }) => {
           setActiveChannel(response.data);
           dispatch(setCurrentChannel(response.data));
         });
-    } catch (e) {
-      console.log(e);
+    } catch (err) {
+      console.log(err);
       setError(true);
       setErrorName(error);
     }
@@ -64,7 +64,7 @@ const CreateChannel = ({ setShowModal, setActiveChannel }) => {
 
   return (
     <>
-      <div className="fade modal-backdrop show"></div>
+      <div className="fade modal-backdrop show" />
       <div
         role="dialog"
         aria-modal="true"
@@ -82,7 +82,7 @@ const CreateChannel = ({ setShowModal, setActiveChannel }) => {
                 data-bs-dismiss="modal"
                 className="btn btn-close"
                 onClick={close}
-              ></button>
+              />
             </div>
             <div className="modal-body">
               <form className="" onSubmit={(e) => handleSubmit(e)}>
@@ -90,7 +90,7 @@ const CreateChannel = ({ setShowModal, setActiveChannel }) => {
                   <input
                     name="name"
                     id="name"
-                    className={`mb-2 form-control ${error && "is-invalid"}`}
+                    className={`mb-2 form-control ${error && 'is-invalid'}`}
                     onChange={(e) => handleInput(e)}
                     value={channelName}
                     autoComplete="channel"

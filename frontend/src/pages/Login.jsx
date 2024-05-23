@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { useFormik} from 'formik';
+import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -34,23 +34,22 @@ const Login = () => {
           localStorage.setItem('token', data.token);
           addToken(data.token);
           addUserName(data.username);
-          navigate('/')
+          navigate('/');
         } else {
-          setError(true)
+          setError(true);
         }
-      }
-      catch (error) {
-        console.error('Ошибка при отправке запроса:', error);
-        setError(true)
+      } catch (err) {
+        console.error('Ошибка при отправке запроса:', err);
+        setError(true);
       }
     },
   });
 
   return (
     <div className="h-100">
-      <div className='h-100' id='chat'>
-        <div className='d-flex flex-column h-100'>
-          <nav className='shadow-sm navbar navbar-expand-lg navbar-light bg-white'>
+      <div className="h-100" id="chat">
+        <div className="d-flex flex-column h-100">
+          <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
             <div className="container">
               <a href="/" className="navbar-brand">
                 Hexlet Chat
@@ -63,18 +62,18 @@ const Login = () => {
                 <div className="card shadow-sm">
                   <div className="card-body row p-5">
                     <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
-                      <img src={logo} className="rounded-circle" alt="Войти"></img>
+                      <img src={logo} className="rounded-circle" alt="Войти" />
                     </div>
-                    <form className='col-12 col-md-6 mt-3 mt-mb-0' onSubmit={formik.handleSubmit}>
-                      <h1 className='text-center mb-4'>Войти</h1>
+                    <form className="col-12 col-md-6 mt-3 mt-mb-0" onSubmit={formik.handleSubmit}>
+                      <h1 className="text-center mb-4">Войти</h1>
                       <div className="form-group form-floating mb-3">
                         <input
                           type="username"
                           name="username"
-                          className={`form-control ${error ? 'is-invalid': ''}`}
+                          className={`form-control ${error ? 'is-invalid' : ''}`}
                           onChange={formik.handleChange}
                           value={formik.values.username}
-                          autoComplete='username'
+                          autoComplete="username"
                         />
                         <label htmlFor="email">Ваш ник</label>
                       </div>
@@ -82,10 +81,10 @@ const Login = () => {
                         <input
                           type="password"
                           name="password"
-                          className={`form-control ${error ? 'is-invalid': ''}`}
+                          className={`form-control ${error ? 'is-invalid' : ''}`}
                           onChange={formik.handleChange}
                           value={formik.values.password}
-                          autoComplete='password'
+                          autoComplete="password"
                         />
                         <label htmlFor="password">Пароль</label>
                         { error && (
@@ -94,14 +93,14 @@ const Login = () => {
                           </div>
                         )}
                       </div>
-                      <button type='submit' className='w-100 mb-3 btn btn-outline-primary'>Log in</button>
+                      <button type="submit" className="w-100 mb-3 btn btn-outline-primary">Log in</button>
                     </form>
                   </div>
 
                   <div className="card-footer p-4">
                     <div className="text-center">
                       <span>Нет аккаунта? </span>
-                      <a href='/signup'>Регистрация</a>
+                      <a href="/signup">Регистрация</a>
                     </div>
                   </div>
                 </div>
@@ -111,7 +110,7 @@ const Login = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Login;
