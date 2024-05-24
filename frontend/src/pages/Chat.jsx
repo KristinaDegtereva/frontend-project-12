@@ -12,10 +12,10 @@ const Chat = () => {
 
   const dispatch = useDispatch();
 
-  const getChannels = async (token) => {
+  const getChannels = async (authToken) => {
     await axios.get('/api/v1/channels', {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
     })
       .then((response) => {
@@ -26,10 +26,10 @@ const Chat = () => {
       });
   };
 
-  const getMessages = async (token) => {
+  const getMessages = async (authToken) => {
     await axios.get('/api/v1/messages', {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
     }).then((response) => {
       dispatch(setMessages(response.data));
@@ -45,20 +45,18 @@ const Chat = () => {
   }, [token]);
 
   return (
-    <>
-      <div className="h-100" id="chat">
-        <div className="d-flex flex-column h-100">
-          <Header />
-          <div className="container h-100 my-4 overflow-hidden rounded shadow">
-            <div className="row h-100 bg-white flex-md-row">
-              <Channels />
-              <FieldMessages />
-            </div>
+    <div className="h-100" id="chat">
+      <div className="d-flex flex-column h-100">
+        <Header />
+        <div className="container h-100 my-4 overflow-hidden rounded shadow">
+          <div className="row h-100 bg-white flex-md-row">
+            <Channels />
+            <FieldMessages />
           </div>
         </div>
-        <div className="Toastify"></div>
       </div>
-    </>
+      <div className="Toastify" />
+    </div>
   );
 };
 

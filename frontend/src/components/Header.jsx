@@ -1,7 +1,7 @@
 import React from 'react';
-import { resetToken, resetUserName } from "../slices/authSlice";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { resetToken, resetUserName } from '../slices/authSlice';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -31,6 +31,6 @@ const Header = () => {
       </div>
     </nav>
   );
-}
+};
 
 export default Header;

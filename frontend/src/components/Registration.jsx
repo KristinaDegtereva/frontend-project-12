@@ -10,7 +10,7 @@ const Registration = () => {
 
   return (
     <div>
-      <button type='button' onClick={createnewUser}>
+      <button type="button" onClick={createnewUser}>
         Create
       </button>
     </div>

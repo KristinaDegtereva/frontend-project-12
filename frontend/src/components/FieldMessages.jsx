@@ -30,36 +30,34 @@ const FieldMessages = () => {
   }, [messagesLocal]);
 
   return (
-    <>
-      <div className="col p-0 h-100">
-        <div className="d-flex flex-column h-100">
-          <div className="bg-light mb-4 p-3 shadow-sm small">
-            <p className="m-0">
-              <b>
-                #
-                {currentChannel && currentChannel.name}
-              </b>
-            </p>
-            <span className="text-muted">
-              {messageOfChannel.length} сообщений
-            </span>
-          </div>
-          <div
-            id="messages-box"
-            className="chat-messages overflow-auto px-5"
-          >
-            {messageOfChannel.flat().length > 0 && (
-              messages.flat().filter((el) => el.channelId === currentChannel.id).map((el) => {
-                return (
-                  <Messages username={el.username} message={el.body} key={el.id} />
-                )
-              })
-            )}
-          </div>
-          <InputField channelId={currentChannel && currentChannel.id} />
+    <div className="col p-0 h-100">
+      <div className="d-flex flex-column h-100">
+        <div className="bg-light mb-4 p-3 shadow-sm small">
+          <p className="m-0">
+            <b>
+              #
+              {currentChannel && currentChannel.name}
+            </b>
+          </p>
+          <span className="text-muted">
+            {messageOfChannel.length}
+            {' '}
+            сообщений
+          </span>
         </div>
+        <div
+          id="messages-box"
+          className="chat-messages overflow-auto px-5"
+        >
+          {messageOfChannel.flat().length > 0 && (
+            messages.flat().filter((el) => el.channelId === currentChannel.id).map((el) => (
+              <Messages username={el.username} message={el.body} key={el.id} />
+            ))
+          )}
+        </div>
+        <InputField channelId={currentChannel && currentChannel.id} />
       </div>
-    </>
+    </div>
   );
 };
 

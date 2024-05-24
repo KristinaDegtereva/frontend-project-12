@@ -16,7 +16,7 @@ const messagesSlice = createSlice({
       return {
         ...state,
         messages: state.messages.filter(
-          (el) => Number(el.channelId) !== Number(action.payload)
+          (el) => Number(el.channelId) !== Number(action.payload),
         ),
       };
     },
