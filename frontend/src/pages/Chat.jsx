@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { setChannels } from '../slices/channelSlice';
 import Header from '../components/Header';
-import Messages from '../components/FieldMessages';
+import FieldMessages from '../components/FieldMessages';
 import Channels from '../components/Channels';
 import { setMessages } from '../slices/messagesSlice';
 
@@ -45,18 +45,20 @@ const Chat = () => {
   }, [token]);
 
   return (
-    <div className="h-100" id="chat">
-      <div className="d-flex flex-column h-100">
-        <Header />
-        <div className="container h-100 my-4 overflow-hidden rounded shadow">
-          <div className="row h-100 bg-white flex-md-row">
-            <Channels />
-            <Messages />
+    <>
+      <div className="h-100" id="chat">
+        <div className="d-flex flex-column h-100">
+          <Header />
+          <div className="container h-100 my-4 overflow-hidden rounded shadow">
+            <div className="row h-100 bg-white flex-md-row">
+              <Channels />
+              <FieldMessages />
+            </div>
           </div>
         </div>
+        <div className="Toastify"></div>
       </div>
-      <div className="Toastify" />
-    </div>
+    </>
   );
 };
 

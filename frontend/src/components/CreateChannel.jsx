@@ -2,126 +2,106 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentChannel } from '../slices/currentChannelSlice';
+import * as yup from "yup";
+import { useFormik } from "formik";
+import { Modal, Form } from "react-bootstrap";
 
 const CreateChannel = ({ setShowModal, setActiveChannel }) => {
-  const [error, setError] = useState(false);
-  const [errName, setErrorName] = useState('');
-  const [channelName, setChannelName] = useState('');
   const channels = useSelector((state) => state.channels.channels);
 
   const dispatch = useDispatch();
   const token = localStorage.getItem('token');
 
-  const closeModal = (e) => {
-    e.stopPropagation();
-    const target = e.target.closest('.modal-content');
-    if (!target) {
-      setShowModal(false);
-    }
+  const channelsNames = () => {
+    return channels.map((el) => el.name);
   };
+  const names = channelsNames();
 
   const close = () => {
     setShowModal(false);
   };
 
-  const handleInput = (e) => {
-    const isExistChannel = channels.flat().find((el) => el.name === e.target.value);
+  const getSchema = () =>
+    yup.object().shape({
+      name: yup
+        .string()
+        .trim()
+        .required("Обязательное поле")
+        .min(3, "От 3-20 символов")
+        .max(20, "От 3-20 символов")
+        .notOneOf(names, "Должно быть уникальным"),
+    });
 
-    setChannelName(e.target.value);
-    if (e.target.value.length < 3 || e.target.value.length > 20) {
-      setError(true);
-      setErrorName('От 3 до 20 символов');
-    } else if (isExistChannel) {
-      setError(true);
-      setErrorName('Такой канал существует');
-    } else {
-      setError(false);
-      setErrorName('');
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    try {
-      const newChannel = { name: channelName };
-      axios
-        .post('/api/v1/channels', newChannel, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((response) => {
-          setShowModal(false);
-          setActiveChannel(response.data);
-          dispatch(setCurrentChannel(response.data));
-        });
-    } catch (err) {
-      console.log(err);
-      setError(true);
-      setErrorName(error);
-    }
-  };
+    const formik = useFormik({
+      initialValues: {
+        name: "",
+      },
+      validationSchema: getSchema(),
+      onSubmit: async (values) => {
+        console.log(values);
+        try {
+          const newChannel = { name: values.name };
+          axios
+            .post("/api/v1/channels", newChannel, {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            })
+            .then((response) => {
+              setShowModal(false);
+              setActiveChannel(response.data);
+              dispatch(setCurrentChannel(response.data));
+            });
+        } catch (e) {
+          console.log(e);
+        }
+      },
+    });
 
   return (
     <>
-      <div className="fade modal-backdrop show" />
-      <div
-        role="dialog"
-        aria-modal="true"
-        className="fade modal show d-block"
-        tabIndex="-1"
-        onClick={(e) => closeModal(e)}
-      >
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
-            <div className="modal-header">
-              <div className="modal-title h4">Добавить канал</div>
+    <Modal show onHide={(e) => close(e)} centered>
+      <Modal.Header closeButton>
+        <Modal.Title>Добавить канал</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form onSubmit={formik.handleSubmit}>
+          <Form.Group controlId="name">
+            <Form.Control
+              onChange={formik.handleChange}
+              value={formik.values.name}
+              isInvalid={formik.errors.name && formik.touched.name}
+              autoFocus
+              className="mb-2"
+              name="name"
+              disabled={formik.isSubmitting}
+            />
+            <Form.Label visuallyHidden />
+            <Form.Control.Feedback type="invalid">
+              {formik.errors.name}
+            </Form.Control.Feedback>
+            <div className="d-flex justify-content-end">
               <button
                 type="button"
-                aria-label="Close"
-                data-bs-dismiss="modal"
-                className="btn btn-close"
                 onClick={close}
-              />
+                className="me-2 btn btn-secondary"
+              >
+                Отменить
+              </button>
+              <button
+                type="submit"
+                className="btn btn-primary"
+                disabled={formik.isSubmitting}
+              >
+                Отправить
+              </button>
             </div>
-            <div className="modal-body">
-              <form className="" onSubmit={(e) => handleSubmit(e)}>
-                <div className="form-group">
-                  <input
-                    name="name"
-                    id="name"
-                    className={`mb-2 form-control ${error && 'is-invalid'}`}
-                    onChange={(e) => handleInput(e)}
-                    value={channelName}
-                    autoComplete="channel"
-                    autoFocus
-                  />
-                  <label className="visually-hidden" htmlFor="name">
-                    Имя канала
-                  </label>
-                  <div className="invalid-feedback">
-                    {errName}
-                  </div>
-                  <div className="d-flex justify-content-end">
-                    <button
-                      type="button"
-                      onClick={close}
-                      className="me-2 btn btn-secondary"
-                    >
-                      Отменить
-                    </button>
-                    <button type="submit" className="btn btn-primary" disabled={error || !channelName}>
-                      Отправить
-                    </button>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
-  );
+          </Form.Group>
+        </Form>
+      </Modal.Body>
+    </Modal>
+  </>
+);
 };
 
 export default CreateChannel;
