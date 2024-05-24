@@ -15,7 +15,7 @@ const App = () => {
   const isAuthorized = !!token;
 
   return (
-    <div className="App vh-100 bg-light">
+    <div className="d-flex flex-column h-100">
       <BrowserRouter>
         <Routes>
           <Route path="*" element={<NotFound />} />

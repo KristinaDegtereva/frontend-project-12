@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
 const Input = ({ channelId }) => {
@@ -7,8 +6,6 @@ const Input = ({ channelId }) => {
   const [disabled, setDisabled] = useState(true);
   const userName = localStorage.getItem('username');
   const token = localStorage.getItem('token');
-
-  const dispatch = useDispatch();
 
   const handleMessage = (e) => {
     if (e.target.value.length > 0) {
