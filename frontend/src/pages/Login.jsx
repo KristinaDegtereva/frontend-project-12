@@ -89,7 +89,7 @@ const Login = () => {
                       autoComplete="password"
                     />
                     <label htmlFor="password">Пароль</label>
-                    {err && (
+                    {error && (
                       <div className="invalid-tooltip">
                         Неверные имя пользователя или пароль
                       </div>
