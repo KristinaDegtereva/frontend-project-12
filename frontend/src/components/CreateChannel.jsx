@@ -4,9 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { Modal, Form } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { setCurrentChannel } from '../slices/currentChannelSlice';
 
 const CreateChannel = ({ setShowModal, setActiveChannel }) => {
+  const { t } = useTranslation();
+
   const channels = useSelector((state) => state.channels.channels);
 
   const dispatch = useDispatch();
@@ -23,10 +26,10 @@ const CreateChannel = ({ setShowModal, setActiveChannel }) => {
     name: yup
       .string()
       .trim()
-      .required('Обязательное поле')
-      .min(3, 'От 3-20 символов')
-      .max(20, 'От 3-20 символов')
-      .notOneOf(names, 'Должно быть уникальным'),
+      .required(t('errors.required'))
+      .min(3, t('errors.minMax'))
+      .max(20, t('errors.minMax'))
+      .notOneOf(names, t('errors.uniq')),
   });
 
   const formik = useFormik({
@@ -35,7 +38,6 @@ const CreateChannel = ({ setShowModal, setActiveChannel }) => {
     },
     validationSchema: getSchema(),
     onSubmit: async (values) => {
-      console.log(values);
       try {
         const newChannel = { name: values.name };
         axios
@@ -58,7 +60,7 @@ const CreateChannel = ({ setShowModal, setActiveChannel }) => {
   return (
     <Modal show onHide={(e) => close(e)} centered>
       <Modal.Header closeButton>
-        <Modal.Title>Добавить канал</Modal.Title>
+        <Modal.Title>{t('chat.addChannel')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
@@ -82,14 +84,14 @@ const CreateChannel = ({ setShowModal, setActiveChannel }) => {
                 onClick={close}
                 className="me-2 btn btn-secondary"
               >
-                Отменить
+                {t('chat.cancel')}
               </button>
               <button
                 type="submit"
                 className="btn btn-primary"
                 disabled={formik.isSubmitting}
               >
-                Отправить
+                {t('chat.send')}
               </button>
             </div>
           </Form.Group>

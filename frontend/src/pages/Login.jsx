@@ -15,10 +15,11 @@ const formSchema = Yup.object({
 });
 
 const Login = () => {
+  const { t } = useTranslation();
+
   const navigate = useNavigate();
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
-  const { t } = useTranslation();
 
   const addToken = (token) => dispatch(setToken(token));
   const addUserName = (name) => dispatch(setUserName(name));
@@ -77,7 +78,7 @@ const Login = () => {
                       value={formik.values.username}
                       autoComplete="username"
                     />
-                    <label htmlFor="email">Ваш ник</label>
+                    <label htmlFor="email">{t('login.username')}</label>
                   </div>
                   <div className="form-group form-floating mb-4">
                     <input
@@ -88,10 +89,10 @@ const Login = () => {
                       value={formik.values.password}
                       autoComplete="password"
                     />
-                    <label htmlFor="password">Пароль</label>
+                    <label htmlFor="password">{t('login.password')}</label>
                     {error && (
                       <div className="invalid-tooltip">
-                        Неверные имя пользователя или пароль
+                        {t('errors.wrongLogin')}
                       </div>
                     )}
                   </div>
@@ -99,15 +100,15 @@ const Login = () => {
                     type="submit"
                     className="w-100 mb-3 btn btn-outline-primary"
                   >
-                    Log in
+                    {t('login.login')}
                   </button>
                 </form>
               </div>
 
               <div className="card-footer p-4">
                 <div className="text-center">
-                  <span>Нет аккаунта? </span>
-                  <a href="/signup">Регистрация</a>
+                  <span>{t('login.notAnAccount')}</span>
+                  <a href="/signup">{t('login.linkToRegistration')}</a>
                 </div>
               </div>
             </div>

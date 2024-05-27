@@ -9,6 +9,7 @@ const translation = {
     },
     header: {
       hexlet: 'Hexlet Chat',
+      exit: 'Выйти',
     },
     registration: {
       signUp: 'Регистрация',
@@ -24,19 +25,32 @@ const translation = {
       minSymbols: 'Не менее 6 символов',
       matchPassword: 'Пароли должны совпадать',
       required: 'Обязательное поле',
+      uniq: 'Должно быть уникальным',
     },
     chat: {
       exit: 'Выйти',
       channels: 'Каналы',
-      messageOne: 'сообщение',
-      messagesLess4: 'сообщения',
-      messagesMore5: 'сообщений',
+      key_one: '{{count}} сообщение',
+      key_few: '{{count}} сообщения',
+      key_many: '{{count}} сообщений',
       enterMessage: 'Введите сообщение',
       remove: 'Удалить',
+      removeChannel: 'Удалить канал',
       rename: 'Переименовать',
       renameChannel: 'Переименовать канал',
       cancel: 'Отменить',
       send: 'Отправить',
+      addChanel: 'Добавить канал',
+      sure: 'Уверены?',
+    },
+    signs: {
+      sharp: '#',
+      plus: '+',
+    },
+    notFound: {
+      notFoundPage: 'Страница не найдена',
+      youCanGo: 'Но вы можете перейти ',
+      linkToPage: 'на главную страницу',
     },
   },
 };

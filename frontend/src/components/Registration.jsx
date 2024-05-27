@@ -5,11 +5,14 @@ import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import Header from './Header';
 import imageRegistration from '../images/registration.jpg';
 import { setToken, setUserName } from '../slices/authSlice';
 
 const Registration = () => {
+  const { t } = useTranslation();
+
   const [err, setErr] = useState(false);
 
   const navigate = useNavigate();
@@ -31,18 +34,18 @@ const Registration = () => {
     username: yup
       .string()
       .trim()
-      .required('Обязательное поле')
-      .min(3, 'От 3 до 20 символов')
-      .max(20, 'От 3 до 20 символов'),
+      .required(t('errors.required'))
+      .min(3, t('errors.minMax'))
+      .max(20, t('errors.minMax')),
     password: yup
       .string()
-      .min(6, 'Не менее 6 символов')
-      .required('Обязательное поле'),
+      .min(6, t('errors.minSymbols'))
+      .required(t('errors.required')),
     confirmPassword: yup
       .string()
       .label('confirmPassword')
-      .required('Обязательное поле')
-      .oneOf([yup.ref('password'), null], 'Пароли должны совпадать'),
+      .required(t('errors.required'))
+      .oneOf([yup.ref('password'), null], t('errors.matchPassword')),
   });
 
   const formik = useFormik({
@@ -66,7 +69,7 @@ const Registration = () => {
             }
           });
       } catch (error) {
-        console.log('Ошибка при отправке запроса:', error);
+        console.log(t('errors.networkErr'), error);
         setErr(true);
       }
     },
@@ -84,7 +87,7 @@ const Registration = () => {
                   <img src={imageRegistration} className="rounded-circle" alt="Регистрация" />
                 </div>
                 <Form onSubmit={formik.handleSubmit} className="w-50">
-                  <h1 className="text-center mb-4">Регистрация</h1>
+                  <h1 className="text-center mb-4">{t('registration.signUp')}</h1>
 
                   <Form.Group className="form-floating mb-3">
                     <Form.Control
@@ -103,7 +106,7 @@ const Registration = () => {
                       {formik.errors.username}
                     </Form.Control.Feedback>
                     <label className="form-label" htmlFor="username">
-                      Имя пользователя
+                      {t('registration.nameUser')}
                     </label>
                   </Form.Group>
 
@@ -125,7 +128,7 @@ const Registration = () => {
                       {formik.errors.password}
                     </Form.Control.Feedback>
                     <label className="form-label" htmlFor="password">
-                      Пароль
+                      {t('registration.password')}
                     </label>
                   </Form.Group>
 
@@ -145,14 +148,14 @@ const Registration = () => {
                       }
                     />
                     <Form.Label className="form-label" htmlFor="confirmPassword">
-                      Подтвердите пароль
+                      {t('registration.confirmPassword')}
                     </Form.Label>
                     <Form.Control.Feedback className="invalid-tooltip" style={{ width: 'unset' }}>
                       {formik.errors.confirmPassword || 'Такой пользователь уже существует'}
                     </Form.Control.Feedback>
                   </Form.Group>
                   <button type="submit" className="w-100 btn btn-outline-primary">
-                    Зарегистрироваться
+                    {t('registration.submit')}
                   </button>
                 </Form>
               </div>

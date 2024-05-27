@@ -8,7 +8,7 @@ import i18next from 'i18next';
 import App from './App';
 import store from './store/store.js';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('chat'));
 root.render(
   <I18nextProvider i18n={i18next}>
     <Provider store={store}>
