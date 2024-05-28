@@ -9,6 +9,7 @@ import { useRollbar } from '@rollbar/react';
 import { setToken, setUserName } from '../slices/authSlice';
 import logo from '../images/logo.jpeg';
 import Header from '../components/Header';
+import FormInput from '../components/FormInput';
 
 const formSchema = Yup.object({
   username: Yup.string().required('Обязательное поле'),
@@ -73,26 +74,23 @@ const Login = () => {
                 >
                   <h1 className="text-center mb-4">{t('login.login')}</h1>
                   <div className="form-group form-floating mb-3">
-                    <input
-                      type="username"
+                    <FormInput
                       name="username"
-                      className={`form-control ${error ? 'is-invalid' : ''}`}
-                      onChange={formik.handleChange}
-                      value={formik.values.username}
+                      type="text"
                       autoComplete="username"
+                      formik={formik}
+                      err={error}
+                      label={t('login.username')}
                     />
-                    <label htmlFor="email">{t('login.username')}</label>
-                  </div>
-                  <div className="form-group form-floating mb-4">
-                    <input
-                      type="password"
+
+                    <FormInput
                       name="password"
-                      className={`form-control ${error ? 'is-invalid' : ''}`}
-                      onChange={formik.handleChange}
-                      value={formik.values.password}
+                      type="password"
                       autoComplete="password"
+                      formik={formik}
+                      err={error}
+                      label={t('login.password')}
                     />
-                    <label htmlFor="password">{t('login.password')}</label>
                     {error && (
                       <div className="invalid-tooltip">
                         {t('errors.wrongLogin')}
