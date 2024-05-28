@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import { Modal, Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import * as yup from 'yup';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
@@ -11,6 +10,7 @@ import { setChannels } from '../slices/channelSlice';
 import { setCurrentChannel } from '../slices/currentChannelSlice';
 import 'react-toastify/dist/ReactToastify.css';
 import ButtonComponent from './ButtonComponent';
+import getSchema from '../validationSchema';
 
 const RenameChannel = ({ setShowModal, channel }) => {
   const { t } = useTranslation();
@@ -36,21 +36,11 @@ const RenameChannel = ({ setShowModal, channel }) => {
     setShowModal(false);
   };
 
-  const getSchema = () => yup.object().shape({
-    name: yup
-      .string()
-      .trim()
-      .required(t('errors.required'))
-      .min(3, t('errors.minMax'))
-      .max(20, t('errors.minMax'))
-      .notOneOf(names, t('errors.uniq')),
-  });
-
   const formik = useFormik({
     initialValues: {
       name: '' || channel.name,
     },
-    validationSchema: getSchema(),
+    validationSchema: getSchema(names, t),
     onSubmit: async (values) => {
       try {
         const editedChannel = { name: values.name };
@@ -97,7 +87,7 @@ const RenameChannel = ({ setShowModal, channel }) => {
               {formik.errors.name}
             </Form.Control.Feedback>
             <div className="d-flex justify-content-end">
-            <ButtonComponent onClick={close} className="me-2 btn btn-secondary" />
+              <ButtonComponent onClick={close} className="me-2 btn btn-secondary" />
               <button
                 type="submit"
                 className="btn btn-primary"
