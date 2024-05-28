@@ -5,8 +5,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { setChannels } from '../slices/channelSlice';
 import { setCurrentChannel } from '../slices/currentChannelSlice';
+import 'react-toastify/dist/ReactToastify.css';
 
 const RenameChannel = ({ setShowModal, channel }) => {
   const { t } = useTranslation();
@@ -60,9 +62,11 @@ const RenameChannel = ({ setShowModal, channel }) => {
             const update = channels.map((el) => (el.id === response.data.id ? response.data : el));
             dispatch(setChannels(update));
             dispatch(setCurrentChannel(response.data));
+            toast.success(t('toasts.successRename'));
           });
       } catch (e) {
         console.log(e);
+        toast.error(t('toasts.errorRename'));
       }
     },
   });

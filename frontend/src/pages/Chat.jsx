@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
+import { ToastContainer } from 'react-toastify';
 import { setChannels } from '../slices/channelSlice';
 import Header from '../components/Header';
 import FieldMessages from '../components/FieldMessages';
 import Channels from '../components/Channels';
 import { setMessages } from '../slices/messagesSlice';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Chat = () => {
   const token = localStorage.getItem('token');
@@ -56,7 +58,7 @@ const Chat = () => {
             </div>
           </div>
         </div>
-        <div className="Toastify" />
+        <ToastContainer />
       </div>
     </>
   );
