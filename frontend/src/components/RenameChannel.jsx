@@ -10,6 +10,7 @@ import { useRollbar } from '@rollbar/react';
 import { setChannels } from '../slices/channelSlice';
 import { setCurrentChannel } from '../slices/currentChannelSlice';
 import 'react-toastify/dist/ReactToastify.css';
+import ButtonComponent from './ButtonComponent';
 
 const RenameChannel = ({ setShowModal, channel }) => {
   const { t } = useTranslation();
@@ -96,13 +97,7 @@ const RenameChannel = ({ setShowModal, channel }) => {
               {formik.errors.name}
             </Form.Control.Feedback>
             <div className="d-flex justify-content-end">
-              <button
-                type="button"
-                onClick={close}
-                className="me-2 btn btn-secondary"
-              >
-                {t('chat.cancel')}
-              </button>
+            <ButtonComponent onClick={close} className="me-2 btn btn-secondary" />
               <button
                 type="submit"
                 className="btn btn-primary"
