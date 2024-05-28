@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Dropdown, ButtonGroup, Button } from 'react-bootstrap';
+import { Dropdown, ButtonGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import leo from 'leo-profanity';
 import { setCurrentChannel } from '../slices/currentChannelSlice';
@@ -9,6 +9,7 @@ import DeleteChannel from './DeleteChannel';
 import { addChanel } from '../slices/channelSlice';
 import RenameChannel from './RenameChannel';
 import setupSocket from '../setUpSocket';
+import ChannelButtonComponent from './Buttons/ChannelButtonComponent';
 
 const Channels = () => {
   const { t } = useTranslation();
@@ -82,36 +83,23 @@ const Channels = () => {
         >
           {channels.map((channel) => (!channel.removable ? (
             <li className="nav-item w-100" key={channel.id}>
-              <button
-                type="button"
-                className={`w-100 rounded-0 text-start btn 
-                ${Number(activeChannel.id) === Number(channel.id)
-                  && 'btn-secondary'
-                  }
-                `}
-                onClick={() => handleChannel(channel)}
-              >
-                <span className="me-1">
-                  {t('signs.sharp')}
-                </span>
-                {channel.name}
-              </button>
+              <ChannelButtonComponent
+                activeChannelId={activeChannel.id}
+                channel={channel}
+                handleChannel={handleChannel}
+              />
             </li>
           ) : (
             <li className="nav-item w-100" key={channel.id}>
               <Dropdown as={ButtonGroup} className="d-flex btn-group">
-                <Button
-                  variant="text-start"
-                  className={`w-100 rounded-0 text-start btn ${Number(activeChannel.id) === Number(channel.id)
-                    && 'btn-secondary'
-                  }`}
-                  onClick={() => handleChannel(channel)}
+                <ChannelButtonComponent
+                  activeChannelId={activeChannel.id}
+                  channel={channel}
+                  handleChannel={handleChannel}
+                  isButton
                 >
-                  <span className="me-1">
-                    {t('signs.sharp')}
-                  </span>
                   {leo.clean(channel.name)}
-                </Button>
+                </ChannelButtonComponent>
                 <Dropdown.Toggle
                   variant="text-start"
                   className={`rounded-0 text-start btn ${Number(activeChannel.id) === Number(channel.id)

@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { setCurrentChannel } from '../slices/currentChannelSlice';
 import 'react-toastify/dist/ReactToastify.css';
-import ButtonComponent from './ButtonComponent';
+import ButtonsComponent from './Buttons/ButtonsComponent';
 import getSchema from '../validationSchema';
 
 const CreateChannel = ({ setShowModal, setActiveChannel }) => {
@@ -74,7 +74,7 @@ const CreateChannel = ({ setShowModal, setActiveChannel }) => {
               {formik.errors.name}
             </Form.Control.Feedback>
             <div className="d-flex justify-content-end">
-              <ButtonComponent onClick={close} className="me-2 btn btn-secondary" />
+              <ButtonsComponent onClick={close} className="me-2 btn btn-secondary" />
             </div>
           </Form.Group>
         </Form>

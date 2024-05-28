@@ -9,7 +9,7 @@ import { useRollbar } from '@rollbar/react';
 import { setChannels } from '../slices/channelSlice';
 import { setCurrentChannel } from '../slices/currentChannelSlice';
 import 'react-toastify/dist/ReactToastify.css';
-import ButtonsComponent from './ButtonComponent';
+import ButtonsComponent from './Buttons/ButtonsComponent';
 import getSchema from '../validationSchema';
 
 const RenameChannel = ({ setShowModal, channel }) => {
