@@ -3,13 +3,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Dropdown, ButtonGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import leo from 'leo-profanity';
-import { setCurrentChannel } from '../slices/currentChannelSlice';
+import { setCurrentChannel } from '../../slices/currentChannelSlice';
 import CreateChannel from './CreateChannel';
 import DeleteChannel from './DeleteChannel';
-import { addChanel } from '../slices/channelSlice';
+import { addChanel } from '../../slices/channelSlice';
 import RenameChannel from './RenameChannel';
-import setupSocket from '../setUpSocket';
-import ChannelButtonComponent from './Buttons/ChannelButtonComponent';
+import setupSocket from '../../setUpSocket';
+import ChannelButtonComponent from '../Buttons/ChannelButtonComponent';
 
 const Channels = () => {
   const { t } = useTranslation();

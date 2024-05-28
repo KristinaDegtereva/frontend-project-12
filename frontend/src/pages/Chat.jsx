@@ -4,7 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import { setChannels } from '../slices/channelSlice';
 import Header from '../components/Header';
 import FieldMessages from '../components/FieldMessages';
-import Channels from '../components/Channels';
+import Channels from '../components/Channel/Channels';
 import { setMessages } from '../slices/messagesSlice';
 import 'react-toastify/dist/ReactToastify.css';
 import fetchData from '../api';

@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useRollbar } from '@rollbar/react';
-import { setChannels } from '../slices/channelSlice';
-import { removeMessages } from '../slices/messagesSlice';
+import { setChannels } from '../../slices/channelSlice';
+import { removeMessages } from '../../slices/messagesSlice';
 import 'react-toastify/dist/ReactToastify.css';
 
 const DeleteChannel = ({ channel, setShowDeleteWindow, handleChannel }) => {

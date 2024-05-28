@@ -6,11 +6,11 @@ import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useRollbar } from '@rollbar/react';
-import { setChannels } from '../slices/channelSlice';
-import { setCurrentChannel } from '../slices/currentChannelSlice';
+import { setChannels } from '../../slices/channelSlice';
+import { setCurrentChannel } from '../../slices/currentChannelSlice';
 import 'react-toastify/dist/ReactToastify.css';
-import ButtonsComponent from './Buttons/ButtonsComponent';
-import getSchema from '../validationSchema';
+import ButtonsComponent from '../Buttons/ButtonsComponent';
+import getSchema from '../../validationSchema';
 
 const RenameChannel = ({ setShowModal, channel }) => {
   const { t } = useTranslation();

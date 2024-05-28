@@ -11,6 +11,8 @@ import {
 } from '@rollbar/react';
 import App from './App';
 import store from './store/store.js';
+import './styles/App.scss';
+import './styles/index.css';
 
 const rollbarConfig = {
   accessToken: process.env.ACCESS_TOKEN,

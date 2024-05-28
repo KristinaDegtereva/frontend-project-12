@@ -5,10 +5,10 @@ import { useFormik } from 'formik';
 import { Modal, Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { setCurrentChannel } from '../slices/currentChannelSlice';
+import { setCurrentChannel } from '../../slices/currentChannelSlice';
 import 'react-toastify/dist/ReactToastify.css';
-import ButtonsComponent from './Buttons/ButtonsComponent';
-import getSchema from '../validationSchema';
+import ButtonsComponent from '../Buttons/ButtonsComponent';
+import getSchema from '../../validationSchema';
 
 const CreateChannel = ({ setShowModal, setActiveChannel }) => {
   const { t } = useTranslation();
@@ -29,7 +29,7 @@ const CreateChannel = ({ setShowModal, setActiveChannel }) => {
     initialValues: {
       name: '',
     },
-    validationSchema: getSchema(names),
+    validationSchema: getSchema(names, t),
     onSubmit: async (values) => {
       try {
         const newChannel = { name: values.name };
