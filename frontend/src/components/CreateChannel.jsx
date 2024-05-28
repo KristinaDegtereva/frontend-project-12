@@ -29,7 +29,7 @@ const CreateChannel = ({ setShowModal, setActiveChannel }) => {
     initialValues: {
       name: '',
     },
-    validationSchema: getSchema(names, t),
+    validationSchema: getSchema(names),
     onSubmit: async (values) => {
       try {
         const newChannel = { name: values.name };
@@ -75,13 +75,6 @@ const CreateChannel = ({ setShowModal, setActiveChannel }) => {
             </Form.Control.Feedback>
             <div className="d-flex justify-content-end">
               <ButtonComponent onClick={close} className="me-2 btn btn-secondary" />
-              <button
-                type="submit"
-                className="btn btn-primary"
-                disabled={formik.isSubmitting}
-              >
-                {t('chat.send')}
-              </button>
             </div>
           </Form.Group>
         </Form>

@@ -9,7 +9,7 @@ import { useRollbar } from '@rollbar/react';
 import { setChannels } from '../slices/channelSlice';
 import { setCurrentChannel } from '../slices/currentChannelSlice';
 import 'react-toastify/dist/ReactToastify.css';
-import ButtonComponent from './ButtonComponent';
+import ButtonsComponent from './ButtonComponent';
 import getSchema from '../validationSchema';
 
 const RenameChannel = ({ setShowModal, channel }) => {
@@ -87,14 +87,7 @@ const RenameChannel = ({ setShowModal, channel }) => {
               {formik.errors.name}
             </Form.Control.Feedback>
             <div className="d-flex justify-content-end">
-              <ButtonComponent onClick={close} className="me-2 btn btn-secondary" />
-              <button
-                type="submit"
-                className="btn btn-primary"
-                disabled={formik.isSubmitting}
-              >
-                {t('chat.send')}
-              </button>
+              <ButtonsComponent onClick={close} />
             </div>
           </Form.Group>
         </Form>
