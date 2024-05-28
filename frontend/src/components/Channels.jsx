@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Dropdown, ButtonGroup, Button } from 'react-bootstrap';
-import { io } from 'socket.io-client';
 import { useTranslation } from 'react-i18next';
 import leo from 'leo-profanity';
 import { setCurrentChannel } from '../slices/currentChannelSlice';
@@ -9,6 +8,7 @@ import CreateChannel from './CreateChannel';
 import DeleteChannel from './DeleteChannel';
 import { addChanel } from '../slices/channelSlice';
 import RenameChannel from './RenameChannel';
+import setupSocket from '../setUpSocket';
 
 const Channels = () => {
   const { t } = useTranslation();
@@ -42,11 +42,7 @@ const Channels = () => {
   };
 
   useEffect(() => {
-    const socket = io();
-    socket.on('newChannel', (payload) => {
-      setUpdateChannel(payload);
-    });
-    return (next) => (action) => next(action);
+    setupSocket('newChannel', setUpdateChannel);
   }, []);
 
   useEffect(() => {

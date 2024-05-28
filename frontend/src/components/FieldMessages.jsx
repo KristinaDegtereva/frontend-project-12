@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { io } from 'socket.io-client';
 import { useTranslation } from 'react-i18next';
 import InputField from './Input';
 import Messages from './Messages';
 import { setMessages } from '../slices/messagesSlice';
+import setupSocket from '../setUpSocket';
 
 const FieldMessages = () => {
   const { t } = useTranslation();
@@ -18,12 +18,7 @@ const FieldMessages = () => {
   const messageOfChannel = messages.flat().filter((el) => el.channelId === currentChannel.id);
 
   useEffect(() => {
-    const socket = io();
-    socket.on('newMessage', (payload) => {
-      setMessagesLocal(payload);
-    });
-
-    return (next) => (action) => next(action);
+    setupSocket('newMessage', setMessagesLocal);
   }, []);
 
   useEffect(() => {
