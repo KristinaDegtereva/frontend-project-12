@@ -1,5 +1,3 @@
-import dotenv from 'dotenv';
-
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
@@ -13,8 +11,6 @@ import {
 } from '@rollbar/react';
 import App from './App';
 import store from './store/store.js';
-
-dotenv.config();
 
 const rollbarConfig = {
   accessToken: process.env.ACCESS_TOKEN,
