@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Dropdown, ButtonGroup, Button } from 'react-bootstrap';
 import { io } from 'socket.io-client';
 import { useTranslation } from 'react-i18next';
+import leo from 'leo-profanity';
 import { setCurrentChannel } from '../slices/currentChannelSlice';
 import CreateChannel from './CreateChannel';
 import DeleteChannel from './DeleteChannel';
@@ -113,7 +114,7 @@ const Channels = () => {
                   <span className="me-1">
                     {t('signs.sharp')}
                   </span>
-                  {channel.name}
+                  {leo.clean(channel.name)}
                 </Button>
                 <Dropdown.Toggle
                   variant="text-start"
