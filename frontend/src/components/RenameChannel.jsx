@@ -6,12 +6,14 @@ import * as yup from 'yup';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import { useRollbar } from '@rollbar/react';
 import { setChannels } from '../slices/channelSlice';
 import { setCurrentChannel } from '../slices/currentChannelSlice';
 import 'react-toastify/dist/ReactToastify.css';
 
 const RenameChannel = ({ setShowModal, channel }) => {
   const { t } = useTranslation();
+  const rollbar = useRollbar();
 
   const channels = useSelector((state) => state.channels.channels);
   const dispatch = useDispatch();
@@ -67,6 +69,7 @@ const RenameChannel = ({ setShowModal, channel }) => {
       } catch (e) {
         console.log(e);
         toast.error(t('toasts.errorRename'));
+        rollbar.error('Rename channel', e);
       }
     },
   });

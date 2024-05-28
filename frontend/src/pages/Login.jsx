@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { useRollbar } from '@rollbar/react';
 import { setToken, setUserName } from '../slices/authSlice';
 import logo from '../images/logo.jpeg';
 import Header from '../components/Header';
@@ -16,6 +17,7 @@ const formSchema = Yup.object({
 
 const Login = () => {
   const { t } = useTranslation();
+  const rollbar = useRollbar();
 
   const navigate = useNavigate();
   const [error, setError] = useState(null);
@@ -45,6 +47,7 @@ const Login = () => {
       } catch (err) {
         console.error('Ошибка при отправке запроса:', err);
         setError(true);
+        rollbar.error('Login page', error);
       }
     },
   });

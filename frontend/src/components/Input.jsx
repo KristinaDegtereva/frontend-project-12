@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import { useRollbar } from '@rollbar/react';
 
 const Input = ({ channelId }) => {
   const { t } = useTranslation();
-
+  const rollbar = useRollbar();
   const [message, setMessage] = useState('');
   const [disabled] = useState(true);
+
   const userName = localStorage.getItem('username');
   const token = localStorage.getItem('token');
 
@@ -33,6 +35,7 @@ const Input = ({ channelId }) => {
       })
       .catch((err) => {
         console.log(err);
+        rollbar.error('Send message', e);
       });
   };
 

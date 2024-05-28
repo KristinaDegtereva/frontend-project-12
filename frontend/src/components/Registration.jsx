@@ -6,12 +6,14 @@ import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { useRollbar } from '@rollbar/react';
 import Header from './Header';
 import imageRegistration from '../images/registration.jpg';
 import { setToken, setUserName } from '../slices/authSlice';
 
 const Registration = () => {
   const { t } = useTranslation();
+  const rollbar = useRollbar();
 
   const [err, setErr] = useState(false);
 
@@ -71,6 +73,7 @@ const Registration = () => {
       } catch (error) {
         console.log(t('errors.networkErr'), error);
         setErr(true);
+        rollbar.error('Registration failed', error);
       }
     },
   });
@@ -114,7 +117,6 @@ const Registration = () => {
                     <Form.Control
                       placeholder="Не менее 6 символов"
                       name="password"
-                      // aria-describedby="passwordHelpBlock"
                       autoComplete="new-password"
                       type="password"
                       id="password"
