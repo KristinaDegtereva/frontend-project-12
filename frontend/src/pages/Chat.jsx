@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import axios from 'axios';
 import { ToastContainer } from 'react-toastify';
 import { setChannels } from '../slices/channelSlice';
 import Header from '../components/Header';
@@ -8,6 +7,7 @@ import FieldMessages from '../components/FieldMessages';
 import Channels from '../components/Channels';
 import { setMessages } from '../slices/messagesSlice';
 import 'react-toastify/dist/ReactToastify.css';
+import fetchData from '../api';
 
 const Chat = () => {
   const token = localStorage.getItem('token');
@@ -15,30 +15,21 @@ const Chat = () => {
   const dispatch = useDispatch();
 
   const getChannels = async (authToken) => {
-    await axios.get('/api/v1/channels', {
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
-    })
-      .then((response) => {
-        dispatch(setChannels(response.data));
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    try {
+      const data = await fetchData('/api/v1/channels', authToken);
+      dispatch(setChannels(data));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const getMessages = async (authToken) => {
-    await axios.get('/api/v1/messages', {
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
-    }).then((response) => {
-      dispatch(setMessages(response.data));
-    })
-      .catch((e) => {
-        console.log(e);
-      });
+    try {
+      const data = await fetchData('/api/v1/channels', authToken);
+      dispatch(setMessages(data));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
