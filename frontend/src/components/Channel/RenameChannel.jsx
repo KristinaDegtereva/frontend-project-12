@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Modal, Form } from 'react-bootstrap';
+import { Modal, Form, Button } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
@@ -9,7 +9,6 @@ import { useRollbar } from '@rollbar/react';
 import leo from 'leo-profanity';
 import { setChannels } from '../../slices/channelSlice';
 import 'react-toastify/dist/ReactToastify.css';
-import ButtonsComponent from '../Buttons/ButtonsComponent';
 import getSchema from '../../validationSchema';
 
 const RenameChannel = ({ setShowModal, channel }) => {
@@ -54,7 +53,6 @@ const RenameChannel = ({ setShowModal, channel }) => {
             setShowModal(false);
             const update = channels.map((el) => (el.id === response.data.id ? response.data : el));
             dispatch(setChannels(update));
-            // dispatch(setCurrentChannel(response.data));
             toast.success(t('toasts.successRename'));
           });
       } catch (e) {
@@ -89,7 +87,21 @@ const RenameChannel = ({ setShowModal, channel }) => {
               {formik.errors.name}
             </Form.Control.Feedback>
             <div className="d-flex justify-content-end">
-              <ButtonsComponent onClick={close} />
+            <Button
+                type="button"
+                variant="secondary"
+                onClick={close}
+                className="me-2"
+              >
+                {t('chat.cancel')}
+              </Button>
+              <Button
+                type="submit"
+                variant="primary"
+                disabled={formik.isSubmitting}
+              >
+                {t('chat.send')}
+              </Button>
             </div>
           </Form.Group>
         </Form>

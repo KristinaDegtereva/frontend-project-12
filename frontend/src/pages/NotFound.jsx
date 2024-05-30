@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import Header from '../components/Header';
-import imageNotfound from '../images/404.png';
+import notFound from '../images/404.png';
 
 const NotFound = () => {
   const { t } = useTranslation();
@@ -13,10 +13,10 @@ const NotFound = () => {
         <h1 className="h4 text-muted mt-3">{t('notFound.notFoundPage')}</h1>
         <p className="text-muted">
           {t('notFound.youCanGo')}
-          {' '}
+          &nbsp;
           <a href="/">{t('notFound.linkToPage')}</a>
         </p>
-        <img alt="Страница не найдена" className="img-fluid" src={imageNotfound} />
+        <img alt="Страница не найдена" className="img-fluid" src={notFound} />
       </div>
     </div>
   );
