@@ -8,10 +8,10 @@ start-frontend:
 	make -C frontend start
 
 start-backend:
-	npx start-server
+	npm start
 
 deploy:
-	git push heroku main
+	git push
 
 start:
 	make start-backend
