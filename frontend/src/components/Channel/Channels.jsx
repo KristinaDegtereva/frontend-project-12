@@ -8,6 +8,7 @@ import CreateChannel from './CreateChannel';
 import DeleteChannel from './DeleteChannel';
 import { addChanel } from '../../slices/channelSlice';
 import RenameChannel from './RenameChannel';
+import setupSocket from '../../setUpSocket';
 
 const Channels = () => {
   const { t } = useTranslation();

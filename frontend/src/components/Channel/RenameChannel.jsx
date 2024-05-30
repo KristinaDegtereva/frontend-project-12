@@ -87,7 +87,7 @@ const RenameChannel = ({ setShowModal, channel }) => {
               {formik.errors.name}
             </Form.Control.Feedback>
             <div className="d-flex justify-content-end">
-            <Button
+              <Button
                 type="button"
                 variant="secondary"
                 onClick={close}

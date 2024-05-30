@@ -1,5 +1,4 @@
 import './App.css';
-import { useSelector } from 'react-redux';
 import {
   Routes,
   Route,

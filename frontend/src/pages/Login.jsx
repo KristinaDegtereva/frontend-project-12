@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { useState, useRef, useEffect } from 'react';
 import { useFormik } from 'formik';
 import { Form } from 'react-bootstrap';
-import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -10,12 +9,6 @@ import { useRollbar } from '@rollbar/react';
 import { setToken, setUserName } from '../slices/authSlice';
 import logo from '../images/logo.jpeg';
 import Header from '../components/Header';
-// import FormInput from '../components/FormInput';
-
-// const formSchema = Yup.object({
-//   username: Yup.string().required('Обязательное поле'),
-//   password: Yup.string().required('Обязательное поле'),
-// });
 
 const Login = () => {
   const { t } = useTranslation();

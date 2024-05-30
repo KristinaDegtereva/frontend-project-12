@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { setChannels } from '../slices/channelSlice';
 import Header from '../components/Header';
-import FieldMessages from '../components/FieldMessages';
+import FieldMessages from '../components/Field';
 import Channels from '../components/Channel/Channels';
 import { setMessages } from '../slices/messagesSlice';
 import 'react-toastify/dist/ReactToastify.css';
