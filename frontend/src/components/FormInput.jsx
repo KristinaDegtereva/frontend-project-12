@@ -16,6 +16,7 @@ const FormInput = ({
       onChange={formik.handleChange}
       disabled={formik.isSubmitting}
       isInvalid={(formik.errors[name] && formik.touched[name]) || err}
+      required
     />
     <Form.Control.Feedback className="invalid-tooltip" style={{ width: 'unset' }}>
       {formik.errors[name]}

@@ -10,7 +10,6 @@ import { useRollbar } from '@rollbar/react';
 import Header from './Header';
 import imageRegistration from '../images/registration.jpg';
 import { setToken, setUserName } from '../slices/authSlice';
-import FormInput from './FormInput';
 
 const Registration = () => {
   const { t } = useTranslation();
@@ -93,35 +92,92 @@ const Registration = () => {
                 <Form onSubmit={formik.handleSubmit} className="w-50">
                   <h1 className="text-center mb-4">{t('registration.signUp')}</h1>
 
-                  <FormInput
-                    name="username"
-                    type="text"
-                    placeholder="От 3 до 20 символов"
-                    autoComplete="username"
-                    formik={formik}
-                    err={err}
-                    label={t('registration.nameUser')}
-                  />
+                  <Form.Group className="form-floating mb-3">
+                    <Form.Control
+                      placeholder="От 3 до 20 символов"
+                      name="username"
+                      ref={inputRef}
+                      autoComplete="username"
+                      id="username"
+                      className="form-control"
+                      value={formik.values.username}
+                      onChange={formik.handleChange}
+                      disabled={formik.isSubmitting}
+                      isInvalid={
+                        (formik.errors.username && formik.touched.username)
+                        || err
+                      }
+                      autoFocus
+                    />
+                    <Form.Control.Feedback
+                      className="invalid-tooltip"
+                      style={{ width: 'unset' }}
+                    >
+                      {formik.errors.username}
+                    </Form.Control.Feedback>
+                    <label className="form-label" htmlFor="username">
+                      {t('registration.nameUser')}
+                    </label>
+                  </Form.Group>
 
-                  <FormInput
-                    name="password"
-                    type="password"
-                    placeholder="Не менее 6 символов"
-                    autoComplete="new-password"
-                    formik={formik}
-                    err={err}
-                    label={t('registration.password')}
-                  />
+                  <Form.Group className="form-floating mb-3">
+                    <Form.Control
+                      placeholder="Не менее 6 символов"
+                      name="password"
+                      autoComplete="new-password"
+                      type="password"
+                      id="password"
+                      className="form-control"
+                      value={formik.values.password}
+                      onChange={formik.handleChange}
+                      disabled={formik.isSubmitting}
+                      isInvalid={
+                        (formik.errors.password && formik.touched.password)
+                        || err
+                      }
+                    />
+                    <Form.Control.Feedback
+                      className="invalid-tooltip"
+                      style={{ width: 'unset' }}
+                    >
+                      {formik.errors.password}
+                    </Form.Control.Feedback>
+                    <label className="form-label" htmlFor="password">
+                      {t('registration.password')}
+                    </label>
+                  </Form.Group>
 
-                  <FormInput
-                    name="confirmPassword"
-                    type="password"
-                    placeholder="Пароли должны совпадать"
-                    autoComplete="new-password"
-                    formik={formik}
-                    err={err}
-                    label={t('registration.confirmPassword')}
-                  />
+                  <Form.Group className="form-floating mb-4">
+                    <Form.Control
+                      placeholder="Пароли должны совпадать"
+                      name="confirmPassword"
+                      type="password"
+                      id="confirmPassword"
+                      autoComplete="new-password"
+                      className="form-control"
+                      onChange={formik.handleChange}
+                      value={formik.values.confirmPassword}
+                      disabled={formik.isSubmitting}
+                      isInvalid={
+                        (formik.errors.confirmPassword
+                          && formik.touched.confirmPassword)
+                        || err
+                      }
+                    />
+                    <Form.Label
+                      className="form-label"
+                      htmlFor="confirmPassword"
+                    >
+                      {t('registration.confirmPassword')}
+                    </Form.Label>
+                    <Form.Control.Feedback
+                      className="invalid-tooltip"
+                      style={{ width: 'unset' }}
+                    >
+                      {formik.errors.confirmPassword
+                        || 'Такой пользователь уже существует'}
+                    </Form.Control.Feedback>
+                  </Form.Group>
                   <button type="submit" className="w-100 btn btn-outline-primary">
                     {t('registration.submit')}
                   </button>

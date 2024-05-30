@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
+import { Form } from 'react-bootstrap';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -49,6 +50,7 @@ const Login = () => {
         console.error('Ошибка при отправке запроса:', err);
         setError(true);
         rollbar.error('Login page', error);
+        console.log(err);
       }
     },
   });
@@ -68,28 +70,32 @@ const Login = () => {
                     alt="Войти"
                   />
                 </div>
-                <form
+                <Form
                   className="col-12 col-md-6 mt-3 mt-mb-0"
                   onSubmit={formik.handleSubmit}
                 >
                   <h1 className="text-center mb-4">{t('login.login')}</h1>
                   <div className="form-group form-floating mb-3">
                     <FormInput
+                      placeholder="Ваш ник"
                       name="username"
                       type="text"
                       autoComplete="username"
                       formik={formik}
                       err={error}
                       label={t('login.username')}
+                      id="username"
                     />
 
                     <FormInput
+                      placeholder="Пароль"
                       name="password"
                       type="password"
                       autoComplete="password"
                       formik={formik}
                       err={error}
                       label={t('login.password')}
+                      id="password"
                     />
                     {error && (
                       <div className="invalid-tooltip">
@@ -103,12 +109,13 @@ const Login = () => {
                   >
                     {t('login.login')}
                   </button>
-                </form>
+                </Form>
               </div>
 
               <div className="card-footer p-4">
                 <div className="text-center">
                   <span>{t('login.notAnAccount')}</span>
+                  &nbsp;
                   <a href="/signup">{t('login.linkToRegistration')}</a>
                 </div>
               </div>
