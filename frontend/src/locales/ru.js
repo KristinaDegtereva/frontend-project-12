@@ -30,6 +30,7 @@ const translation = {
     chat: {
       exit: 'Выйти',
       channels: 'Каналы',
+      channelName: 'Имя канала',
       key_one: '{{count}} сообщение',
       key_few: '{{count}} сообщения',
       key_many: '{{count}} сообщений',
@@ -42,6 +43,8 @@ const translation = {
       send: 'Отправить',
       addChanel: 'Добавить канал',
       sure: 'Уверены?',
+      newMessage: 'Новое сообщение',
+      textInput: 'Введите сообщение...',
     },
     signs: {
       sharp: '#',

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
@@ -7,20 +7,28 @@ const Input = ({ channelId }) => {
   const { t } = useTranslation();
   const rollbar = useRollbar();
   const [message, setMessage] = useState('');
-  const [disabled] = useState(true);
+  const [disabled, setDisabled] = useState(true);
 
   const userName = localStorage.getItem('username');
   const token = localStorage.getItem('token');
 
-  // const handleMessage = (e) => {
-  //   if (e.target.value.length > 0) {
-  //     setMessage(e.target.value);
-  //     setDisabled(false);
-  //   } else {
-  //     setDisabled(true);
-  //     setMessage('');
-  //   }
-  // };
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [channelId]);
+
+  const handleMessage = (e) => {
+    if (e.target.value.length > 0) {
+      setMessage(e.target.value);
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+      setMessage('');
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,10 +53,12 @@ const Input = ({ channelId }) => {
         <div className="input-group has-validation">
           <input
             name="body"
-            aria-label="Новое сообщение"
-            placeholder="Введите сообщение..."
+            aria-label={t('chat.newMessage')}
+            placeholder={t('chat.textInput')}
             className="border-0 p-0 ps-2 form-control"
-            value=""
+            value={message}
+            onChange={(e) => handleMessage(e)}
+            ref={inputRef}
           />
           <button
             type="submit"

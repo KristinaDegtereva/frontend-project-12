@@ -69,7 +69,7 @@ const CreateChannel = ({ setShowModal, setActiveChannel }) => {
               name="name"
               disabled={formik.isSubmitting}
             />
-            <Form.Label visuallyHidden>Имя канала</Form.Label>
+            <Form.Label visuallyHidden>{t('chat.channelName')}</Form.Label>
             <Form.Control.Feedback type="invalid">
               {formik.errors.name}
             </Form.Control.Feedback>

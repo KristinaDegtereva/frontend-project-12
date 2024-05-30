@@ -6,8 +6,8 @@ import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useRollbar } from '@rollbar/react';
+import leo from 'leo-profanity';
 import { setChannels } from '../../slices/channelSlice';
-import { setCurrentChannel } from '../../slices/currentChannelSlice';
 import 'react-toastify/dist/ReactToastify.css';
 import ButtonsComponent from '../Buttons/ButtonsComponent';
 import getSchema from '../../validationSchema';
@@ -38,7 +38,7 @@ const RenameChannel = ({ setShowModal, channel }) => {
 
   const formik = useFormik({
     initialValues: {
-      name: '' || channel.name,
+      name: '' || leo.clean(channel.name),
     },
     validationSchema: getSchema(names, t),
     onSubmit: async (values) => {
@@ -54,10 +54,11 @@ const RenameChannel = ({ setShowModal, channel }) => {
             setShowModal(false);
             const update = channels.map((el) => (el.id === response.data.id ? response.data : el));
             dispatch(setChannels(update));
-            dispatch(setCurrentChannel(response.data));
+            // dispatch(setCurrentChannel(response.data));
             toast.success(t('toasts.successRename'));
           });
       } catch (e) {
+        setShowModal(false);
         console.log(e);
         toast.error(t('toasts.errorRename'));
         rollbar.error('Rename channel', e);
@@ -81,8 +82,9 @@ const RenameChannel = ({ setShowModal, channel }) => {
               className="mb-2"
               name="name"
               disabled={formik.isSubmitting}
+              autoFocus
             />
-            <Form.Label visuallyHidden />
+            <Form.Label className="visuallyHidden">{t('chat.channelName')}</Form.Label>
             <Form.Control.Feedback type="invalid">
               {formik.errors.name}
             </Form.Control.Feedback>

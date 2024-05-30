@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Dropdown, ButtonGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import leo from 'leo-profanity';
+// import { init } from 'rollbar';
 import { setCurrentChannel } from '../../slices/currentChannelSlice';
 import CreateChannel from './CreateChannel';
 import DeleteChannel from './DeleteChannel';
@@ -31,15 +32,18 @@ const Channels = () => {
   };
 
   const handleClick = () => {
+    console.log('click');
     setShowModal(true);
   };
 
   const handleDelete = () => {
+    setActiveChannel(activeChannel);
     setShowDeleteWindow(true);
   };
 
   const handleRename = () => {
     setShowRenameWindow(true);
+    setActiveChannel(activeChannel);
   };
 
   useEffect(() => {
@@ -102,15 +106,15 @@ const Channels = () => {
                 </ChannelButtonComponent>
                 <Dropdown.Toggle
                   variant="text-start"
-                  className={`rounded-0 text-start btn ${Number(activeChannel.id) === Number(channel.id)
+                  className={`rounded-0 text-start btn ${Number(initChannel.id) === Number(channel.id)
                     && 'btn-secondary'
                   }`}
                 />
-                <Dropdown.Menu onClick={() => handleChannel(channel)}>
+                <Dropdown.Menu onClick={() => setActiveChannel(channel)}>
                   <Dropdown.Item onClick={() => handleDelete(channel)}>
                     {t('chat.remove')}
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleRename(channel)}>
+                  <Dropdown.Item onClick={() => handleRename()}>
                     {t('chat.rename')}
                   </Dropdown.Item>
                 </Dropdown.Menu>

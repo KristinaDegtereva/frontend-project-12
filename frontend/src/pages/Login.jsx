@@ -22,7 +22,7 @@ const Login = () => {
   const rollbar = useRollbar();
 
   const navigate = useNavigate();
-  const [error, setError] = useState(null);
+  const [err, setError] = useState(null);
   const dispatch = useDispatch();
 
   const addToken = (token) => dispatch(setToken(token));
@@ -46,11 +46,11 @@ const Login = () => {
         } else {
           setError(true);
         }
-      } catch (err) {
-        console.error('Ошибка при отправке запроса:', err);
+      } catch (error) {
+        console.error('Ошибка при отправке запроса:', error);
         setError(true);
         rollbar.error('Login page', error);
-        console.log(err);
+        console.log(error);
       }
     },
   });
@@ -77,27 +77,27 @@ const Login = () => {
                   <h1 className="text-center mb-4">{t('login.login')}</h1>
                   <div className="form-group form-floating mb-3">
                     <FormInput
-                      placeholder="Ваш ник"
+                      placeholder={t('login.username')}
                       name="username"
                       type="text"
                       autoComplete="username"
                       formik={formik}
-                      err={error}
+                      err={err}
                       label={t('login.username')}
                       id="username"
                     />
 
                     <FormInput
-                      placeholder="Пароль"
+                      placeholder={t('login.password')}
                       name="password"
                       type="password"
                       autoComplete="password"
                       formik={formik}
-                      err={error}
+                      err={err}
                       label={t('login.password')}
                       id="password"
                     />
-                    {error && (
+                    {err && (
                       <div className="invalid-tooltip">
                         {t('errors.wrongLogin')}
                       </div>
