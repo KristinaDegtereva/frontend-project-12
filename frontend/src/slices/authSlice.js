@@ -8,19 +8,31 @@ const authSlice = createSlice({
   },
   reducers: {
     setToken(state, action) {
-      state.token = action.payload;
+      return {
+        ...state,
+        token: action.payload,
+      };
     },
 
     resetToken(state) {
-      state.token = null;
+      return {
+        ...state,
+        token: null,
+      };
     },
 
     setUserName(state, action) {
-      state.userName = action.payload;
+      return {
+        ...state,
+        userName: action.payload,
+      };
     },
 
     resetUserName(state) {
-      state.userName = '';
+      return {
+        ...state,
+        userName: '',
+      };
     },
   },
 });
