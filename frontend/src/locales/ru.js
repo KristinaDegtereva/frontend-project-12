@@ -41,7 +41,7 @@ const translation = {
       renameChannel: 'Переименовать канал',
       cancel: 'Отменить',
       send: 'Отправить',
-      addChanel: 'Добавить канал',
+      addChannel: 'Добавить канал',
       sure: 'Уверены?',
       newMessage: 'Новое сообщение',
       textInput: 'Введите сообщение...',

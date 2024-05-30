@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import './i18n.js';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
@@ -11,6 +10,8 @@ import {
 } from '@rollbar/react';
 import App from './App';
 import store from './store/store.js';
+import './styles/App.scss';
+import './styles/index.css';
 
 const rollbarConfig = {
   accessToken: process.env.ACCESS_TOKEN,
