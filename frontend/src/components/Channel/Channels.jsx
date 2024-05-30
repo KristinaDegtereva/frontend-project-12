@@ -105,13 +105,14 @@ const Channels = () => {
                   {leo.clean(channel.name)}
                 </ChannelButtonComponent>
                 <Dropdown.Toggle
-                  variant="text-start"
-                  className={`rounded-0 text-start btn ${Number(initChannel.id) === Number(channel.id)
+                  className={`rounded-0 ext-start text-truncate ${Number(initChannel.id) === Number(channel.id)
                     && 'btn-secondary'
                   }`}
-                />
+                  >
+                  <span className="visually-hidden">{t('chat.manageChannel')}</span>
+                </Dropdown.Toggle>
                 <Dropdown.Menu onClick={() => setActiveChannel(channel)}>
-                  <Dropdown.Item onClick={() => handleDelete(channel)}>
+                  <Dropdown.Item onClick={() => handleDelete()}>
                     {t('chat.remove')}
                   </Dropdown.Item>
                   <Dropdown.Item onClick={() => handleRename()}>

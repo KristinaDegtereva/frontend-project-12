@@ -9,7 +9,7 @@ const ChannelButtonComponent = ({
   return (
     <Component
       type="button"
-      className={`w-100 rounded-0 text-start btn ${Number(initChannel) === Number(channel.id) && 'btn-secondary'}`}
+      className={`w-100 rounded-0 text-start text-truncate ${Number(initChannel) === Number(channel.id) && 'btn-secondary'}`}
       onClick={() => setActiveChannel(channel)}
     >
       <span className="me-1">
