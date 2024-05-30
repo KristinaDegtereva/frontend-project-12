@@ -15,7 +15,9 @@ const FieldMessages = () => {
 
   const dispatch = useDispatch();
 
-  const messageOfChannel = messages.flat().filter((el) => el.channelId === currentChannel.id);
+  const messageOfChannel = messages
+    .flat()
+    .filter((el) => el.channelId === currentChannel.id);
 
   useEffect(() => {
     setupSocket('newMessage', setMessagesLocal);
@@ -34,6 +36,7 @@ const FieldMessages = () => {
           <p className="m-0">
             <b>
               {t('signs.sharp')}
+              &nbsp;
               {currentChannel && currentChannel.name}
             </b>
           </p>
@@ -48,10 +51,14 @@ const FieldMessages = () => {
           id="messages-box"
           className="chat-messages overflow-auto px-5"
         >
-          {messageOfChannel.flat().length > 0 && (
-            messages.flat().filter((el) => el.channelId === currentChannel.id).map((el) => (
-              <Messages username={el.username} message={el.body} key={el.id} />
-            ))
+          {messageOfChannel
+            .flat()
+            .length > 0 && (
+            messages
+              .flat()
+              .filter((el) => el.channelId === currentChannel.id).map((el) => (
+                <Messages username={el.username} message={el.body} key={el.id} />
+              ))
           )}
         </div>
         <InputField channelId={currentChannel && currentChannel.id} />

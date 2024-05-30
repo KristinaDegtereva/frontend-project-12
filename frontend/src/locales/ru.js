@@ -44,7 +44,7 @@ const translation = {
       sure: 'Уверены?',
       newMessage: 'Новое сообщение',
       textInput: 'Введите сообщение...',
-      manageChannel: 'Управление каналом'
+      manageChannel: 'Управление каналом',
     },
     signs: {
       sharp: '#',

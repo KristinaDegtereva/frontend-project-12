@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useFormik } from 'formik';
 import { Form } from 'react-bootstrap';
 import * as Yup from 'yup';
@@ -10,12 +10,12 @@ import { useRollbar } from '@rollbar/react';
 import { setToken, setUserName } from '../slices/authSlice';
 import logo from '../images/logo.jpeg';
 import Header from '../components/Header';
-import FormInput from '../components/FormInput';
+// import FormInput from '../components/FormInput';
 
-const formSchema = Yup.object({
-  username: Yup.string().required('Обязательное поле'),
-  password: Yup.string().required('Обязательное поле'),
-});
+// const formSchema = Yup.object({
+//   username: Yup.string().required('Обязательное поле'),
+//   password: Yup.string().required('Обязательное поле'),
+// });
 
 const Login = () => {
   const { t } = useTranslation();
@@ -28,12 +28,20 @@ const Login = () => {
   const addToken = (token) => dispatch(setToken(token));
   const addUserName = (name) => dispatch(setUserName(name));
 
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (err) {
+      inputRef.current.focus();
+      inputRef.current.select();
+    }
+  }, [err]);
+
   const formik = useFormik({
     initialValues: {
       username: '',
       password: '',
     },
-    validationSchema: formSchema,
     onSubmit: async (values) => {
       try {
         const { data } = await axios.post('/api/v1/login', values);
@@ -75,34 +83,42 @@ const Login = () => {
                   onSubmit={formik.handleSubmit}
                 >
                   <h1 className="text-center mb-4">{t('login.login')}</h1>
-                  <div className="form-group form-floating mb-3">
-                    <FormInput
-                      placeholder={t('login.username')}
+                  <Form.Group className="form-group form-floating mb-3">
+                    <Form.Control
+                      type="username"
                       name="username"
-                      type="text"
+                      className={`form-control ${err ? 'is-invalid' : ''}`}
+                      onChange={formik.handleChange}
+                      value={formik.values.username}
                       autoComplete="username"
-                      formik={formik}
-                      err={err}
-                      label={t('login.username')}
+                      required
                       id="username"
+                      placeholder="Ваш ник"
+                      ref={inputRef}
+                      autoFocus
                     />
+                    <Form.Label htmlFor="email">{t('login.username')}</Form.Label>
+                  </Form.Group>
 
-                    <FormInput
-                      placeholder={t('login.password')}
-                      name="password"
+                  <Form.Group className="form-group form-floating mb-4">
+                    <Form.Control
                       type="password"
-                      autoComplete="password"
-                      formik={formik}
-                      err={err}
-                      label={t('login.password')}
+                      name="password"
                       id="password"
+                      className={`form-control ${err ? 'is-invalid' : ''}`}
+                      onChange={formik.handleChange}
+                      value={formik.values.password}
+                      autoComplete="current-password"
+                      placeholder="Пароль"
+                      required
                     />
+                    <Form.Label htmlFor="password">{t('login.password')}</Form.Label>
                     {err && (
-                      <div className="invalid-tooltip">
+                      <Form.Control.Feedback className="invalid-tooltip" style={{ width: 'unset' }}>
                         {t('errors.wrongLogin')}
-                      </div>
+                      </Form.Control.Feedback>
                     )}
-                  </div>
+                  </Form.Group>
                   <button
                     type="submit"
                     className="w-100 mb-3 btn btn-outline-primary"
@@ -111,7 +127,6 @@ const Login = () => {
                   </button>
                 </Form>
               </div>
-
               <div className="card-footer p-4">
                 <div className="text-center">
                   <span>{t('login.notAnAccount')}</span>

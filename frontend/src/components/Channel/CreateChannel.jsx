@@ -5,15 +5,16 @@ import { useFormik } from 'formik';
 import { Modal, Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import { useRollbar } from '@rollbar/react';
 import { setCurrentChannel } from '../../slices/currentChannelSlice';
 import 'react-toastify/dist/ReactToastify.css';
-import ButtonsComponent from '../Buttons/ButtonsComponent';
 import getSchema from '../../validationSchema';
 
 const CreateChannel = ({ setShowModal, setActiveChannel }) => {
   const { t } = useTranslation();
 
   const channels = useSelector((state) => state.channels.channels);
+  const rollbar = useRollbar();
 
   const dispatch = useDispatch();
   const token = localStorage.getItem('token');
@@ -48,6 +49,7 @@ const CreateChannel = ({ setShowModal, setActiveChannel }) => {
       } catch (e) {
         console.log(e);
         toast.error(t('toasts.errorCreate'));
+        rollbar.error('Create channel', e);
       }
     },
   });
@@ -74,7 +76,20 @@ const CreateChannel = ({ setShowModal, setActiveChannel }) => {
               {formik.errors.name}
             </Form.Control.Feedback>
             <div className="d-flex justify-content-end">
-              <ButtonsComponent onClick={close} className="me-2 btn btn-secondary" />
+              <button
+                type="button"
+                onClick={close}
+                className="me-2 btn btn-secondary"
+              >
+                {t('chat.cancel')}
+              </button>
+              <button
+                type="submit"
+                className="btn btn-primary"
+                disabled={formik.isSubmitting}
+              >
+                {t('chat.send')}
+              </button>
             </div>
           </Form.Group>
         </Form>

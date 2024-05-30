@@ -99,7 +99,7 @@ const Channels = () => {
           ) : (
             <li className="nav-item w-100" key={channel.id}>
               <Dropdown as={ButtonGroup} className="d-flex btn-group">
-              <Button
+                <Button
                   type="button"
                   className="w-100 rounded-0 text-start text-truncate"
                   variant={`${Number(initChannel.id) === Number(channel.id) && 'secondary'}`}

@@ -19,6 +19,7 @@ const DeleteChannel = ({ channel, setShowDeleteWindow, handleChannel }) => {
   const currentChannel = useSelector((state) => state.currentChannel.currentChannel);
 
   const defaultChannel = { id: '1', name: 'general', removable: false };
+
   const closeWindow = () => {
     setShowDeleteWindow(false);
   };
