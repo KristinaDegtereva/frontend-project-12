@@ -19,7 +19,7 @@ const Chat = () => {
       const data = await fetchData('/api/v1/channels', authToken);
       dispatch(setChannels(data));
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
 
@@ -28,13 +28,13 @@ const Chat = () => {
       const data = await fetchData('/api/v1/channels', authToken);
       dispatch(setMessages(data));
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
 
   useEffect(() => {
-    getChannels(token);
-    getMessages(token);
+    getChannels();
+    getMessages();
   }, [token]);
 
   return (

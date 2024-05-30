@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Dropdown, ButtonGroup } from 'react-bootstrap';
+import { Dropdown, ButtonGroup, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import leo from 'leo-profanity';
-// import { init } from 'rollbar';
 import { setCurrentChannel } from '../../slices/currentChannelSlice';
 import CreateChannel from './CreateChannel';
 import DeleteChannel from './DeleteChannel';
 import { addChanel } from '../../slices/channelSlice';
 import RenameChannel from './RenameChannel';
-import setupSocket from '../../setUpSocket';
-import ChannelButtonComponent from '../Buttons/ChannelButtonComponent';
 
 const Channels = () => {
   const { t } = useTranslation();
@@ -32,7 +29,6 @@ const Channels = () => {
   };
 
   const handleClick = () => {
-    console.log('click');
     setShowModal(true);
   };
 
@@ -87,28 +83,39 @@ const Channels = () => {
         >
           {channels.map((channel) => (!channel.removable ? (
             <li className="nav-item w-100" key={channel.id}>
-              <ChannelButtonComponent
-                activeChannelId={activeChannel.id}
-                channel={channel}
-                handleChannel={handleChannel}
-              />
+              <button
+                type="button"
+                className={`w-100 rounded-0 text-truncate btn text-start
+                ${Number(initChannel.id) === Number(channel.id)
+                  && 'btn-secondary'
+                  }
+                `}
+                onClick={() => handleChannel(channel)}
+              >
+                <span className="me-1">{t('signs.sharp')}</span>
+                {channel.name}
+              </button>
             </li>
           ) : (
             <li className="nav-item w-100" key={channel.id}>
               <Dropdown as={ButtonGroup} className="d-flex btn-group">
-                <ChannelButtonComponent
-                  activeChannelId={activeChannel.id}
-                  channel={channel}
-                  handleChannel={handleChannel}
-                  isButton
+              <Button
+                  type="button"
+                  className="w-100 rounded-0 text-start text-truncate"
+                  variant={`${Number(initChannel.id) === Number(channel.id) && 'secondary'}`}
+                  onClick={() => handleChannel(channel)}
                 >
+                  <span className="me-1">{t('signs.sharp')}</span>
                   {leo.clean(channel.name)}
-                </ChannelButtonComponent>
+                </Button>
                 <Dropdown.Toggle
-                  className={`rounded-0 ext-start text-truncate ${Number(initChannel.id) === Number(channel.id)
-                    && 'btn-secondary'
-                  }`}
-                  >
+                  type="button"
+                  id="react-aria9230295641-1"
+                  split
+                  className={`border-0 
+                    `}
+                  variant={`${Number(initChannel.id) === Number(channel.id) && 'secondary'}`}
+                >
                   <span className="visually-hidden">{t('chat.manageChannel')}</span>
                 </Dropdown.Toggle>
                 <Dropdown.Menu onClick={() => setActiveChannel(channel)}>
@@ -129,7 +136,7 @@ const Channels = () => {
           channel={activeChannel}
           setShowModal={setShowModal}
           setActiveChannel={setActiveChannel}
-          title="Добавить канал"
+          title={t('chat.addChanel')}
         />
       )}
       {showDeleteWindow && (

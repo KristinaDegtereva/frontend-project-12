@@ -28,7 +28,6 @@ const translation = {
       uniq: 'Должно быть уникальным',
     },
     chat: {
-      exit: 'Выйти',
       channels: 'Каналы',
       channelName: 'Имя канала',
       key_one: '{{count}} сообщение',
