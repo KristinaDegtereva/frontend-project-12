@@ -1,35 +1,48 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
+import axios from 'axios';
 import { setChannels } from '../slices/channelSlice';
 import Header from '../components/Header';
-import FieldMessages from '../components/Field';
+import Field from '../components/Field';
 import Channels from '../components/Channel/Channels';
 import { setMessages } from '../slices/messagesSlice';
 import 'react-toastify/dist/ReactToastify.css';
-import fetchData from '../api';
+// import fetchData from '../api';
 
 const Chat = () => {
   const token = localStorage.getItem('token');
 
   const dispatch = useDispatch();
 
-  const getChannels = async (authToken) => {
-    try {
-      const data = await fetchData('/api/v1/channels', authToken);
-      dispatch(setChannels(data));
-    } catch (error) {
-      console.log(error);
-    }
+  const getChannels = async () => {
+    await axios
+      .get('/api/v1/channels', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        dispatch(setChannels(response.data));
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
-  const getMessages = async (authToken) => {
-    try {
-      const data = await fetchData('/api/v1/channels', authToken);
-      dispatch(setMessages(data));
-    } catch (error) {
-      console.log(error);
-    }
+  const getMessages = async () => {
+    await axios
+      .get('/api/v1/messages', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        dispatch(setMessages(response.data));
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   useEffect(() => {
@@ -45,7 +58,7 @@ const Chat = () => {
           <div className="container h-100 my-4 overflow-hidden rounded shadow">
             <div className="row h-100 bg-white flex-md-row">
               <Channels />
-              <FieldMessages />
+              <Field />
             </div>
           </div>
         </div>
