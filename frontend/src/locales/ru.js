@@ -61,7 +61,7 @@ const translation = {
       errorRename: 'Не удалось переименовать',
       successCreate: 'Канал создан',
       errorCreate: 'Не удалось создать',
-      successRemove: 'Канал удален',
+      successRemove: 'Канал удалён',
       errorRemove: 'Не удалось удалить',
     },
   },
