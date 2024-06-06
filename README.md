@@ -27,5 +27,6 @@ Hexlet-chat is a simple chat application that allows users to communicate with e
  ```
  1. git clone https://github.com/KristinaDegtereva/frontend-project-12
  2. make install
- 3. make start
+ 3. make build
+ 4. make develop
  ```
