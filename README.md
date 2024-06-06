@@ -20,7 +20,7 @@ Hexlet-chat is a simple chat application that allows users to communicate with e
   - There is a filter words in messages and channel, bad words would be hidden by '*'
   - Send and receive messages in real time
 
-## Installation
+### Installation
 
  ```
  1. git clone https://github.com/KristinaDegtereva/frontend-project-12
