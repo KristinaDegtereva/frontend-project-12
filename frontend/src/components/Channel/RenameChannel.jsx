@@ -82,7 +82,6 @@ const RenameChannel = ({ setShowModal, channel }) => {
               disabled={formik.isSubmitting}
               autoFocus
             />
-            <Form.Label className="visuallyHidden">{t('chat.channelName')}</Form.Label>
             <Form.Control.Feedback type="invalid">
               {formik.errors.name}
             </Form.Control.Feedback>
