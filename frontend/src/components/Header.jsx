@@ -1,12 +1,13 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { resetToken, resetUserName } from '../slices/authSlice';
-import PrivateRoute from '../PrivateRoute';
 
 const Header = () => {
   const { t } = useTranslation();
+  const token = useSelector((state) => state.user.token);
+  const isAuthorized = !!token;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ const Header = () => {
         <a className="navbar-brand" href="/">
           {t('header.hexlet')}
         </a>
-        <PrivateRoute>
+        {isAuthorized && (
           <button
             type="button"
             className="btn btn-primary"
@@ -33,7 +34,7 @@ const Header = () => {
           >
             {t('header.exit')}
           </button>
-        </PrivateRoute>
+        )}
       </div>
     </nav>
   );
