@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useRollbar } from '@rollbar/react';
 import leo from 'leo-profanity';
-import { setChannels } from '../../slices/channelSlice';
+import { setChannels, getChannels } from '../../slices/channelSlice';
 import 'react-toastify/dist/ReactToastify.css';
 import getSchema from '../../validationSchema';
 
@@ -15,7 +15,7 @@ const RenameChannel = ({ setShowModal, channel }) => {
   const { t } = useTranslation();
   const rollbar = useRollbar();
 
-  const channels = useSelector((state) => state.channels.channels);
+  const channels = useSelector(getChannels);
   const dispatch = useDispatch();
   const token = localStorage.getItem('token');
 

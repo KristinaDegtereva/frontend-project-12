@@ -4,13 +4,14 @@ import { useTranslation } from 'react-i18next';
 import { io } from 'socket.io-client';
 import InputField from './Input';
 import Messages from './Messages';
-import { setMessages } from '../slices/messagesSlice';
+import { setMessages, getMessages } from '../slices/messagesSlice';
+import { getCurrentChannel } from '../slices/currentChannelSlice';
 
 const FieldMessages = () => {
   const { t } = useTranslation();
 
-  const currentChannel = useSelector((state) => state.currentChannel.currentChannel);
-  const messages = useSelector((state) => state.messages.messages);
+  const currentChannel = useSelector(getCurrentChannel);
+  const messages = useSelector(getMessages);
   const [messagesLocal, setMessagesLocal] = useState(null);
 
   const dispatch = useDispatch();

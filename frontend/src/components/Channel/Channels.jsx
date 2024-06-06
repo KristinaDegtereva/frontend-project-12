@@ -4,16 +4,16 @@ import { Dropdown, ButtonGroup, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { io } from 'socket.io-client';
 import leo from 'leo-profanity';
-import { setCurrentChannel } from '../../slices/currentChannelSlice';
+import { setCurrentChannel, getCurrentChannel } from '../../slices/currentChannelSlice';
+import { addChanel, getChannels } from '../../slices/channelSlice';
 import CreateChannel from './CreateChannel';
 import DeleteChannel from './DeleteChannel';
-import { addChanel } from '../../slices/channelSlice';
 import RenameChannel from './RenameChannel';
 
 const Channels = () => {
   const { t } = useTranslation();
 
-  const initChannel = useSelector((state) => state.currentChannel.currentChannel);
+  const initChannel = useSelector(getCurrentChannel);
 
   const [activeChannel, setActiveChannel] = useState(initChannel);
   const [showDeleteWindow, setShowDeleteWindow] = useState(false);
@@ -22,7 +22,7 @@ const Channels = () => {
   const [showRenameWindow, setShowRenameWindow] = useState(false);
 
   const dispatch = useDispatch();
-  const channels = useSelector((state) => state.channels.channels);
+  const channels = useSelector(getChannels);
 
   const handleChannel = (channel) => {
     setActiveChannel(channel);

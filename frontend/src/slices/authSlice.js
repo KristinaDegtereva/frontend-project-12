@@ -41,4 +41,7 @@ export const {
   setToken, resetToken, setUserName, resetUserName,
 } = authSlice.actions;
 
+export const getAuthToken = (state) => state.user.token;
+export const getUserName = (state) => state.user.userName;
+
 export default authSlice.reducer;

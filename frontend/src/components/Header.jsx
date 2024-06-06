@@ -2,11 +2,11 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { resetToken, resetUserName } from '../slices/authSlice';
+import { resetToken, resetUserName, getAuthToken } from '../slices/authSlice';
 
 const Header = () => {
   const { t } = useTranslation();
-  const token = useSelector((state) => state.user.token);
+  const token = useSelector(getAuthToken);
   const isAuthorized = !!token;
 
   const dispatch = useDispatch();

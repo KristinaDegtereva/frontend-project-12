@@ -7,13 +7,14 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useRollbar } from '@rollbar/react';
 import { setCurrentChannel } from '../../slices/currentChannelSlice';
+import { getChannels } from '../../slices/channelSlice';
 import 'react-toastify/dist/ReactToastify.css';
 import getSchema from '../../validationSchema';
 
 const CreateChannel = ({ setShowModal, setActiveChannel }) => {
   const { t } = useTranslation();
 
-  const channels = useSelector((state) => state.channels.channels);
+  const channels = useSelector(getChannels);
   const rollbar = useRollbar();
 
   const dispatch = useDispatch();

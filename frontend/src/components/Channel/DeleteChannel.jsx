@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useRollbar } from '@rollbar/react';
-import { setChannels } from '../../slices/channelSlice';
+import { setChannels, getChannels } from '../../slices/channelSlice';
+import { getCurrentChannel } from '../../slices/currentChannelSlice';
 import { removeMessages } from '../../slices/messagesSlice';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -15,8 +16,8 @@ const DeleteChannel = ({ channel, setShowDeleteWindow, handleChannel }) => {
   const dispatch = useDispatch();
 
   const token = localStorage.getItem('token');
-  const channels = useSelector((state) => state.channels.channels);
-  const currentChannel = useSelector((state) => state.currentChannel.currentChannel);
+  const channels = useSelector(getChannels);
+  const currentChannel = useSelector(getCurrentChannel);
 
   const defaultChannel = { id: '1', name: 'general', removable: false };
 
