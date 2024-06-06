@@ -7,8 +7,8 @@ import {
 import Login from './pages/Login.jsx';
 import Chat from './pages/Chat.jsx';
 import NotFound from './pages/NotFound.jsx';
-import Registration from './components/Registration.jsx';
-import PrivateRoute from './routes.js';
+import Registration from './pages/Registration.jsx';
+import PrivateRoute from './PrivateRoute.js';
 
 const App = () => (
   <div className="d-flex flex-column h-100">

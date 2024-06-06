@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
-import Header from './Header';
+import Header from '../components/Header';
 import imageRegistration from '../images/registration.jpg';
 import { setToken, setUserName } from '../slices/authSlice';
 

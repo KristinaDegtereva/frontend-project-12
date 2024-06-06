@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { resetToken, resetUserName } from '../slices/authSlice';
-import PrivateRoute from '../routes';
+import PrivateRoute from '../PrivateRoute';
 
 const Header = () => {
   const { t } = useTranslation();
