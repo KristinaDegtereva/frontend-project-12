@@ -1,22 +1,19 @@
 import * as yup from 'yup';
 
+const stringValidation = (t, min = 3, max = 20) => yup
+  .string()
+  .trim()
+  .required(t('errors.required'))
+  .min(min, t('errors.minMax'))
+  .max(max, t('errors.minMax'));
+
 export const getNameSchema = (names, t) => yup.object().shape({
-  name: yup
-    .string()
-    .trim()
-    .required(t('errors.required'))
-    .min(3, t('errors.minMax'))
-    .max(20, t('errors.minMax'))
+  name: stringValidation(t)
     .notOneOf(names, t('errors.uniq')),
 });
 
 export const getSignUpSchema = (t) => yup.object().shape({
-  username: yup
-    .string()
-    .trim()
-    .required(t('errors.required'))
-    .min(3, t('errors.minMax'))
-    .max(20, t('errors.minMax')),
+  username: stringValidation(t),
   password: yup
     .string()
     .min(6, t('errors.minSymbols'))
