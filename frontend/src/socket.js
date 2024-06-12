@@ -1,16 +1,15 @@
 import { io } from 'socket.io-client';
-import store from './store/store';
-import { setMessages } from './slices/messagesSlice';
-import { addChanel } from './slices/channelSlice';
 
 const socket = io();
 
-socket.on('newMessage', (payload) => {
-  store.dispatch(setMessages(payload));
-});
+export const subscribeToEvent = (event, callback) => {
+  socket.on(event, callback);
+};
 
-socket.on('newChannel', (payload) => {
-  store.dispatch(addChanel(payload));
-});
+export const emitEvent = (event, data) => {
+  socket.emit(event, data);
+};
 
-export default socket;
+export const unsubscribeFromEvent = (event) => {
+  socket.off(event);
+};
