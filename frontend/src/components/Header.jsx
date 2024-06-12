@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { resetToken, resetUserName, getAuthToken } from '../slices/authSlice';
+import { appPaths } from '../routes';
 
 const Header = () => {
   const { t } = useTranslation();
@@ -17,7 +18,7 @@ const Header = () => {
     dispatch(resetUserName());
     localStorage.removeItem('token');
     localStorage.removeItem('username');
-    navigate('/login');
+    navigate(appPaths.chat());
   };
 
   return (

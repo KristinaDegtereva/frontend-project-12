@@ -9,7 +9,7 @@ import { useRollbar } from '@rollbar/react';
 import { setToken, setUserName } from '../slices/authSlice';
 import logo from '../images/logo.jpeg';
 import Header from '../components/Header';
-import { apiRoutes } from '../routes';
+import { apiRoutes, appPaths } from '../routes';
 
 const Login = () => {
   const { t } = useTranslation();
@@ -44,7 +44,7 @@ const Login = () => {
           localStorage.setItem('token', data.token);
           addToken(data.token);
           addUserName(data.username);
-          navigate('/');
+          navigate(appPaths.chat());
         } else {
           setError(true);
         }
