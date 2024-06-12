@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { io } from 'socket.io-client';
+import leo from 'leo-profanity';
 import InputField from './Input';
 import Messages from './Messages';
 import { setMessages, getMessages } from '../slices/messagesSlice';
@@ -42,7 +43,7 @@ const FieldMessages = () => {
             <b>
               {t('signs.sharp')}
               &nbsp;
-              {currentChannel && currentChannel.name}
+              {currentChannel && leo.clean(currentChannel.name)}
             </b>
           </p>
           <span className="text-muted">

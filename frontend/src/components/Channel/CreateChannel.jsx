@@ -11,6 +11,7 @@ import { getChannels } from '../../slices/channelSlice';
 import 'react-toastify/dist/ReactToastify.css';
 import { getNameSchema } from '../../validationSchema';
 import { apiRoutes } from '../../routes';
+import { useToken } from '../context/authContext';
 
 const CreateChannel = ({ setShowModal, setActiveChannel }) => {
   const { t } = useTranslation();
@@ -19,7 +20,7 @@ const CreateChannel = ({ setShowModal, setActiveChannel }) => {
   const rollbar = useRollbar();
 
   const dispatch = useDispatch();
-  const token = localStorage.getItem('token');
+  const { token } = useToken();
 
   const channelsNames = () => channels.map((el) => el.name);
   const names = channelsNames();

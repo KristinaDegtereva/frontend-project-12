@@ -10,13 +10,14 @@ import { getCurrentChannel } from '../../slices/currentChannelSlice';
 import { removeMessages } from '../../slices/messagesSlice';
 import 'react-toastify/dist/ReactToastify.css';
 import { apiRoutes } from '../../routes';
+import { useToken } from '../context/authContext';
 
 const DeleteChannel = ({ channel, setShowDeleteWindow, handleChannel }) => {
   const { t } = useTranslation();
   const rollbar = useRollbar();
   const dispatch = useDispatch();
 
-  const token = localStorage.getItem('token');
+  const { token } = useToken();
   const channels = useSelector(getChannels);
   const currentChannel = useSelector(getCurrentChannel);
 

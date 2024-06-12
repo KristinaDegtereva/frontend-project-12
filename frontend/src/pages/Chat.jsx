@@ -9,11 +9,11 @@ import Channels from '../components/Channel/Channels';
 import { setMessages } from '../slices/messagesSlice';
 import 'react-toastify/dist/ReactToastify.css';
 import { apiRoutes } from '../routes';
+import { useToken } from '../components/context/authContext';
 // import fetchData from '../api';
 
 const Chat = () => {
-  const token = localStorage.getItem('token');
-
+  const { token } = useToken();
   const dispatch = useDispatch();
 
   const getChannels = async () => {
@@ -27,7 +27,7 @@ const Chat = () => {
         dispatch(setChannels(response.data));
       })
       .catch((e) => {
-        console.log(e);
+        console.error(e);
       });
   };
 
@@ -42,7 +42,7 @@ const Chat = () => {
         dispatch(setMessages(response.data));
       })
       .catch((e) => {
-        console.log(e);
+        console.error(e);
       });
   };
 

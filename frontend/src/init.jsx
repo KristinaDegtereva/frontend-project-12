@@ -10,6 +10,7 @@ import {
 import store from './store/store.js';
 import App from './App';
 import resources from './locales';
+import { TokenProvider } from './components/context/authContext.js';
 
 const rollbarConfig = {
   accessToken: process.env.ACCESS_TOKEN,
@@ -38,17 +39,19 @@ const init = async () => {
   leo.add(ruWords);
 
   return (
-    <RollbarProvider config={rollbarConfig}>
-      <ErrorBoundaryProvider>
-        <I18nextProvider i18n={i18n}>
-          <Provider store={store}>
-            <div className="h-100 d-flex flex-column justify-content-between">
-              <App />
-            </div>
-          </Provider>
-        </I18nextProvider>
-      </ErrorBoundaryProvider>
-    </RollbarProvider>
+    <TokenProvider>
+      <RollbarProvider config={rollbarConfig}>
+        <ErrorBoundaryProvider>
+          <I18nextProvider i18n={i18n}>
+            <Provider store={store}>
+              <div className="h-100 d-flex flex-column justify-content-between">
+                <App />
+              </div>
+            </Provider>
+          </I18nextProvider>
+        </ErrorBoundaryProvider>
+      </RollbarProvider>
+    </TokenProvider>
   );
 };
 

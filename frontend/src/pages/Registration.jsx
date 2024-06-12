@@ -11,6 +11,7 @@ import imageRegistration from '../images/registration.jpg';
 import { setToken, setUserName } from '../slices/authSlice';
 import { appPaths, apiRoutes } from '../routes';
 import { getSignUpSchema } from '../validationSchema';
+import { useToken } from '../components/context/authContext';
 
 const Registration = () => {
   const { t } = useTranslation();
@@ -20,6 +21,8 @@ const Registration = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const { saveToken, saveUsername } = useToken();
 
   const addToken = (token) => dispatch(setToken(token));
   const addUserName = (name) => dispatch(setUserName(name));
@@ -46,8 +49,8 @@ const Registration = () => {
           .post(apiRoutes.signup(), { username: values.username, password: values.password })
           .then((response) => {
             if (response.data.token) {
-              localStorage.setItem('username', response.data.username);
-              localStorage.setItem('token', response.data.token);
+              saveToken(response.data.token);
+              saveUsername(response.data.username);
               addToken(response.data.token);
               addUserName(response.data.username);
               navigate(appPaths.chat());

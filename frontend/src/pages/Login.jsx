@@ -10,6 +10,7 @@ import { setToken, setUserName } from '../slices/authSlice';
 import logo from '../images/logo.jpeg';
 import Header from '../components/Header';
 import { apiRoutes, appPaths } from '../routes';
+import { useToken } from '../components/context/authContext';
 
 const Login = () => {
   const { t } = useTranslation();
@@ -21,6 +22,7 @@ const Login = () => {
 
   const addToken = (token) => dispatch(setToken(token));
   const addUserName = (name) => dispatch(setUserName(name));
+  const { saveToken, saveUsername } = useToken();
 
   const inputRef = useRef(null);
 
@@ -42,6 +44,8 @@ const Login = () => {
         if (data.token) {
           localStorage.setItem('username', data.username);
           localStorage.setItem('token', data.token);
+          saveToken(data.token);
+          saveUsername(data.username);
           addToken(data.token);
           addUserName(data.username);
           navigate(appPaths.chat());

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
 import { apiRoutes } from '../routes';
+import { useToken } from './context/authContext';
 
 const Input = ({ channelId }) => {
   const { t } = useTranslation();
@@ -10,8 +11,7 @@ const Input = ({ channelId }) => {
   const [message, setMessage] = useState('');
   const [disabled, setDisabled] = useState(true);
 
-  const userName = localStorage.getItem('username');
-  const token = localStorage.getItem('token');
+  const { userName, token } = useToken();
 
   const inputRef = useRef(null);
 

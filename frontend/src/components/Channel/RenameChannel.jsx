@@ -11,6 +11,7 @@ import { setChannels, getChannels } from '../../slices/channelSlice';
 import 'react-toastify/dist/ReactToastify.css';
 import { getNameSchema } from '../../validationSchema';
 import { apiRoutes } from '../../routes';
+import { useToken } from '../context/authContext';
 
 const RenameChannel = ({ setShowModal, channel }) => {
   const { t } = useTranslation();
@@ -18,7 +19,7 @@ const RenameChannel = ({ setShowModal, channel }) => {
 
   const channels = useSelector(getChannels);
   const dispatch = useDispatch();
-  const token = localStorage.getItem('token');
+  const { token } = useToken();
 
   const inputRef = useRef(null);
 
