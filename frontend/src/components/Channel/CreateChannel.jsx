@@ -37,7 +37,7 @@ const CreateChannel = ({ setShowModal, setActiveChannel }) => {
       try {
         const newChannel = { name: values.name };
         axios
-          .post(apiRoutes.channels, newChannel, {
+          .post(apiRoutes.channels(), newChannel, {
             headers: {
               Authorization: `Bearer ${token}`,
             },

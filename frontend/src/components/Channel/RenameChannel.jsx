@@ -45,7 +45,7 @@ const RenameChannel = ({ setShowModal, channel }) => {
       try {
         const editedChannel = { name: values.name };
         await axios
-          .patch(`${apiRoutes.channels}${channel.id}`, editedChannel, {
+          .patch(`${apiRoutes.channels()}${channel.id}`, editedChannel, {
             headers: {
               Authorization: `Bearer ${token}`,
             },

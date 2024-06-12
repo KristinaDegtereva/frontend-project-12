@@ -38,7 +38,7 @@ const Login = () => {
     },
     onSubmit: async (values) => {
       try {
-        const { data } = await axios.post(apiRoutes.login, values);
+        const { data } = await axios.post(apiRoutes.login(), values);
         if (data.token) {
           localStorage.setItem('username', data.username);
           localStorage.setItem('token', data.token);

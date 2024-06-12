@@ -29,7 +29,7 @@ const DeleteChannel = ({ channel, setShowDeleteWindow, handleChannel }) => {
   const handleDelete = async () => {
     try {
       await axios
-        .delete(`${apiRoutes.channels}${channel.id}`, {
+        .delete(`${apiRoutes.channels()}${channel.id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

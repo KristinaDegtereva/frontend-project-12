@@ -18,7 +18,7 @@ const Chat = () => {
 
   const getChannels = async () => {
     await axios
-      .get(apiRoutes.channels, {
+      .get(apiRoutes.channels(), {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -33,7 +33,7 @@ const Chat = () => {
 
   const getMessages = async () => {
     await axios
-      .get(apiRoutes.messages, {
+      .get(apiRoutes.messages(), {
         headers: {
           Authorization: `Bearer ${token}`,
         },

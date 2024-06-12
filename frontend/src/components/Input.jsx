@@ -34,7 +34,7 @@ const Input = ({ channelId }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newMessage = { body: message, channelId, username: userName };
-    await axios.post(apiRoutes.messages, newMessage, {
+    await axios.post(apiRoutes.messages(), newMessage, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

@@ -10,7 +10,7 @@ import { useRollbar } from '@rollbar/react';
 import Header from '../components/Header';
 import imageRegistration from '../images/registration.jpg';
 import { setToken, setUserName } from '../slices/authSlice';
-import { apiRoutes } from '../routes';
+import { appPaths, apiRoutes } from '../routes';
 
 const Registration = () => {
   const { t } = useTranslation();
@@ -61,14 +61,14 @@ const Registration = () => {
     onSubmit: async (values) => {
       try {
         await axios
-          .post(apiRoutes.signup, { username: values.username, password: values.password })
+          .post(apiRoutes.signup(), { username: values.username, password: values.password })
           .then((response) => {
             if (response.data.token) {
               localStorage.setItem('username', response.data.username);
               localStorage.setItem('token', response.data.token);
               addToken(response.data.token);
               addUserName(response.data.username);
-              navigate('/');
+              navigate(appPaths.chat());
             }
           });
       } catch (error) {
