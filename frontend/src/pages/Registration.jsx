@@ -24,9 +24,6 @@ const Registration = () => {
 
   const { saveToken, saveUsername } = useToken();
 
-  const addToken = (token) => dispatch(setToken(token));
-  const addUserName = (name) => dispatch(setUserName(name));
-
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -36,6 +33,27 @@ const Registration = () => {
     }
   }, [err]);
 
+  const registerUser = async (values) => {
+    try {
+      const response = await axios.post(apiRoutes.signup(), {
+        username: values.username,
+        password: values.password,
+      });
+
+      if (response.data.token) {
+        saveToken(response.data.token);
+        saveUsername(response.data.username);
+        dispatch(setToken(response.data.token));
+        dispatch(setUserName(response.data.username));
+        navigate(appPaths.chat());
+      }
+    } catch (error) {
+      console.log(t('errors.networkErr'), error);
+      setErr(true);
+      rollbar.error(t('rollbar.registrationFailed'), error);
+    }
+  };
+
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -43,26 +61,33 @@ const Registration = () => {
       confirmPassword: '',
     },
     validationSchema: getSignUpSchema(t),
-    onSubmit: async (values) => {
-      try {
-        await axios
-          .post(apiRoutes.signup(), { username: values.username, password: values.password })
-          .then((response) => {
-            if (response.data.token) {
-              saveToken(response.data.token);
-              saveUsername(response.data.username);
-              addToken(response.data.token);
-              addUserName(response.data.username);
-              navigate(appPaths.chat());
-            }
-          });
-      } catch (error) {
-        console.log(t('errors.networkErr'), error);
-        setErr(true);
-        rollbar.error(t('rollbar.registrationFailed'), error);
-      }
-    },
+    onSubmit: registerUser,
   });
+
+  const renderField = (name, label, placeholder, autoComplete, type = 'text') => (
+    <Form.Group className="form-floating mb-3">
+      <Form.Control
+        placeholder={placeholder}
+        name={name}
+        type={type}
+        autoComplete={autoComplete}
+        id={name}
+        className="form-control"
+        value={formik.values[name]}
+        onChange={formik.handleChange}
+        disabled={formik.isSubmitting}
+        isInvalid={(formik.errors[name] && formik.touched[name]) || err}
+        ref={name === 'username' ? inputRef : null}
+        autoFocus={name === 'username'}
+      />
+      <Form.Control.Feedback className="invalid-tooltip" style={{ width: 'unset' }}>
+        {formik.errors[name]}
+      </Form.Control.Feedback>
+      <label className="form-label" htmlFor={name}>
+        {label}
+      </label>
+    </Form.Group>
+  );
 
   return (
     <>
@@ -77,93 +102,9 @@ const Registration = () => {
                 </div>
                 <Form onSubmit={formik.handleSubmit} className="w-50">
                   <h1 className="text-center mb-4">{t('registration.signUp')}</h1>
-
-                  <Form.Group className="form-floating mb-3">
-                    <Form.Control
-                      placeholder={t('errors.minMax')}
-                      name="username"
-                      ref={inputRef}
-                      autoComplete="username"
-                      id="username"
-                      className="form-control"
-                      value={formik.values.username}
-                      onChange={formik.handleChange}
-                      disabled={formik.isSubmitting}
-                      isInvalid={
-                        (formik.errors.username && formik.touched.username)
-                        || err
-                      }
-                      autoFocus
-                    />
-                    <Form.Control.Feedback
-                      className="invalid-tooltip"
-                      style={{ width: 'unset' }}
-                    >
-                      {formik.errors.username}
-                    </Form.Control.Feedback>
-                    <label className="form-label" htmlFor="username">
-                      {t('registration.nameUser')}
-                    </label>
-                  </Form.Group>
-
-                  <Form.Group className="form-floating mb-3">
-                    <Form.Control
-                      placeholder="Не менее 6 символов"
-                      name="password"
-                      autoComplete="new-password"
-                      type="password"
-                      id="password"
-                      className="form-control"
-                      value={formik.values.password}
-                      onChange={formik.handleChange}
-                      disabled={formik.isSubmitting}
-                      isInvalid={
-                        (formik.errors.password && formik.touched.password)
-                        || err
-                      }
-                    />
-                    <Form.Control.Feedback
-                      className="invalid-tooltip"
-                      style={{ width: 'unset' }}
-                    >
-                      {formik.errors.password}
-                    </Form.Control.Feedback>
-                    <label className="form-label" htmlFor="password">
-                      {t('registration.password')}
-                    </label>
-                  </Form.Group>
-
-                  <Form.Group className="form-floating mb-4">
-                    <Form.Control
-                      placeholder={t('errors.matchPassword')}
-                      name="confirmPassword"
-                      type="password"
-                      id="confirmPassword"
-                      autoComplete="new-password"
-                      className="form-control"
-                      onChange={formik.handleChange}
-                      value={formik.values.confirmPassword}
-                      disabled={formik.isSubmitting}
-                      isInvalid={
-                        (formik.errors.confirmPassword
-                          && formik.touched.confirmPassword)
-                        || err
-                      }
-                    />
-                    <Form.Label
-                      className="form-label"
-                      htmlFor="confirmPassword"
-                    >
-                      {t('registration.confirmPassword')}
-                    </Form.Label>
-                    <Form.Control.Feedback
-                      className="invalid-tooltip"
-                      style={{ width: 'unset' }}
-                    >
-                      {formik.errors.confirmPassword
-                        || t('errors.userExists')}
-                    </Form.Control.Feedback>
-                  </Form.Group>
+                  {renderField('username', t('registration.nameUser'), t('errors.minMax'), 'username')}
+                  {renderField('password', t('registration.password'), 'Не менее 6 символов', 'new-password', 'password')}
+                  {renderField('confirmPassword', t('registration.confirmPassword'), t('errors.matchPassword'), 'new-password', 'password')}
                   <button type="submit" className="w-100 btn btn-outline-primary">
                     {t('registration.submit')}
                   </button>
