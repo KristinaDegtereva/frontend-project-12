@@ -10,6 +10,7 @@ import { setCurrentChannel } from '../../slices/currentChannelSlice';
 import { getChannels } from '../../slices/channelSlice';
 import 'react-toastify/dist/ReactToastify.css';
 import getSchema from '../../validationSchema';
+import { apiRoutes } from '../../routes';
 
 const CreateChannel = ({ setShowModal, setActiveChannel }) => {
   const { t } = useTranslation();
@@ -36,7 +37,7 @@ const CreateChannel = ({ setShowModal, setActiveChannel }) => {
       try {
         const newChannel = { name: values.name };
         axios
-          .post('/api/v1/channels', newChannel, {
+          .post(apiRoutes.channels, newChannel, {
             headers: {
               Authorization: `Bearer ${token}`,
             },

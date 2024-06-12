@@ -9,6 +9,7 @@ import { setChannels, getChannels } from '../../slices/channelSlice';
 import { getCurrentChannel } from '../../slices/currentChannelSlice';
 import { removeMessages } from '../../slices/messagesSlice';
 import 'react-toastify/dist/ReactToastify.css';
+import { apiRoutes } from '../../routes';
 
 const DeleteChannel = ({ channel, setShowDeleteWindow, handleChannel }) => {
   const { t } = useTranslation();
@@ -28,7 +29,7 @@ const DeleteChannel = ({ channel, setShowDeleteWindow, handleChannel }) => {
   const handleDelete = async () => {
     try {
       await axios
-        .delete(`/api/v1/channels/${channel.id}`, {
+        .delete(`${apiRoutes.channels}${channel.id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

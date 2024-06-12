@@ -8,6 +8,7 @@ import Field from '../components/Field';
 import Channels from '../components/Channel/Channels';
 import { setMessages } from '../slices/messagesSlice';
 import 'react-toastify/dist/ReactToastify.css';
+import { apiRoutes } from '../routes';
 // import fetchData from '../api';
 
 const Chat = () => {
@@ -17,7 +18,7 @@ const Chat = () => {
 
   const getChannels = async () => {
     await axios
-      .get('/api/v1/channels', {
+      .get(apiRoutes.channels, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -32,7 +33,7 @@ const Chat = () => {
 
   const getMessages = async () => {
     await axios
-      .get('/api/v1/messages', {
+      .get(apiRoutes.messages, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

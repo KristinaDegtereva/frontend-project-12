@@ -10,6 +10,7 @@ import leo from 'leo-profanity';
 import { setChannels, getChannels } from '../../slices/channelSlice';
 import 'react-toastify/dist/ReactToastify.css';
 import getSchema from '../../validationSchema';
+import { apiRoutes } from '../../routes';
 
 const RenameChannel = ({ setShowModal, channel }) => {
   const { t } = useTranslation();
@@ -44,7 +45,7 @@ const RenameChannel = ({ setShowModal, channel }) => {
       try {
         const editedChannel = { name: values.name };
         await axios
-          .patch(`/api/v1/channels/${channel.id}`, editedChannel, {
+          .patch(`${apiRoutes.channels}${channel.id}`, editedChannel, {
             headers: {
               Authorization: `Bearer ${token}`,
             },

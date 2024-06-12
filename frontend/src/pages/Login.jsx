@@ -9,6 +9,7 @@ import { useRollbar } from '@rollbar/react';
 import { setToken, setUserName } from '../slices/authSlice';
 import logo from '../images/logo.jpeg';
 import Header from '../components/Header';
+import { apiRoutes } from '../routes';
 
 const Login = () => {
   const { t } = useTranslation();
@@ -37,7 +38,7 @@ const Login = () => {
     },
     onSubmit: async (values) => {
       try {
-        const { data } = await axios.post('/api/v1/login', values);
+        const { data } = await axios.post(apiRoutes.login, values);
         if (data.token) {
           localStorage.setItem('username', data.username);
           localStorage.setItem('token', data.token);
