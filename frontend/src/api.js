@@ -1,16 +1,15 @@
 import axios from 'axios';
 
-const fetchData = async (endpoint, authToken) => {
+const fetchData = async (url, action, token, dispatch) => {
   try {
-    const response = await axios.get(endpoint, {
+    const response = await axios.get(url, {
       headers: {
-        Authorization: `Bearer ${authToken}`,
+        Authorization: `Bearer ${token}`,
       },
     });
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    throw error;
+    dispatch(action(response.data));
+  } catch (e) {
+    console.error(e);
   }
 };
 

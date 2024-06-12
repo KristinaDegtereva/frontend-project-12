@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
-import axios from 'axios';
 import { setChannels } from '../slices/channelSlice';
 import Header from '../components/Header';
 import Field from '../components/Field';
@@ -10,40 +9,18 @@ import { setMessages } from '../slices/messagesSlice';
 import 'react-toastify/dist/ReactToastify.css';
 import { apiRoutes } from '../routes';
 import { useToken } from '../context/authContext';
-// import fetchData from '../api';
+import fetchData from '../api';
 
 const Chat = () => {
   const { token } = useToken();
   const dispatch = useDispatch();
 
-  const getChannels = async () => {
-    await axios
-      .get(apiRoutes.channels(), {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        dispatch(setChannels(response.data));
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+  const getChannels = () => {
+    fetchData(apiRoutes.channels(), setChannels, token, dispatch);
   };
 
-  const getMessages = async () => {
-    await axios
-      .get(apiRoutes.messages(), {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        dispatch(setMessages(response.data));
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+  const getMessages = () => {
+    fetchData(apiRoutes.messages(), setMessages, token, dispatch);
   };
 
   useEffect(() => {
