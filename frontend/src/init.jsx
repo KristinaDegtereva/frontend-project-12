@@ -10,7 +10,7 @@ import {
 import store from './store/store.js';
 import App from './App';
 import resources from './locales';
-import { TokenProvider } from './components/context/authContext.js';
+import { TokenProvider } from './context/authContext.js';
 
 const rollbarConfig = {
   accessToken: process.env.ACCESS_TOKEN,

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { resetToken, resetUserName } from '../slices/authSlice';
 import { appPaths } from '../routes';
-import { useToken } from './context/authContext';
+import { useToken } from '../context/authContext';
 
 const Header = () => {
   const { t } = useTranslation();

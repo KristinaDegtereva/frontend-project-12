@@ -9,7 +9,7 @@ import Channels from '../components/Channel/Channels';
 import { setMessages } from '../slices/messagesSlice';
 import 'react-toastify/dist/ReactToastify.css';
 import { apiRoutes } from '../routes';
-import { useToken } from '../components/context/authContext';
+import { useToken } from '../context/authContext';
 // import fetchData from '../api';
 
 const Chat = () => {

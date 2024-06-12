@@ -10,7 +10,7 @@ import { getCurrentChannel } from '../../slices/currentChannelSlice';
 import { removeMessages } from '../../slices/messagesSlice';
 import 'react-toastify/dist/ReactToastify.css';
 import { apiRoutes } from '../../routes';
-import { useToken } from '../context/authContext';
+import { useToken } from '../../context/authContext';
 
 const DeleteChannel = ({ channel, setShowDeleteWindow, handleChannel }) => {
   const { t } = useTranslation();

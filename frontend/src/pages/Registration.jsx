@@ -11,7 +11,7 @@ import imageRegistration from '../images/registration.jpg';
 import { setToken, setUserName } from '../slices/authSlice';
 import { appPaths, apiRoutes } from '../routes';
 import { getSignUpSchema } from '../validationSchema';
-import { useToken } from '../components/context/authContext';
+import { useToken } from '../context/authContext';
 
 const Registration = () => {
   const { t } = useTranslation();

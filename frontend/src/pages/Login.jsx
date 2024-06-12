@@ -10,7 +10,7 @@ import { setToken, setUserName } from '../slices/authSlice';
 import logo from '../images/logo.jpeg';
 import Header from '../components/Header';
 import { apiRoutes, appPaths } from '../routes';
-import { useToken } from '../components/context/authContext';
+import { useToken } from '../context/authContext';
 
 const Login = () => {
   const { t } = useTranslation();

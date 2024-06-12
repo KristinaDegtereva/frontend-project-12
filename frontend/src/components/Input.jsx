@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
 import { apiRoutes } from '../routes';
-import { useToken } from './context/authContext';
+import { useToken } from '../context/authContext';
 
 const Input = ({ channelId }) => {
   const { t } = useTranslation();

@@ -11,7 +11,7 @@ import { setChannels, getChannels } from '../../slices/channelSlice';
 import 'react-toastify/dist/ReactToastify.css';
 import { getNameSchema } from '../../validationSchema';
 import { apiRoutes } from '../../routes';
-import { useToken } from '../context/authContext';
+import { useToken } from '../../context/authContext';
 
 const RenameChannel = ({ setShowModal, channel }) => {
   const { t } = useTranslation();

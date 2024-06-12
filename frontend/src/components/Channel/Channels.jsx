@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Dropdown, ButtonGroup, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { io } from 'socket.io-client';
 import leo from 'leo-profanity';
 import { setCurrentChannel, getCurrentChannel } from '../../slices/currentChannelSlice';
 import { addChanel, getChannels } from '../../slices/channelSlice';
@@ -19,7 +18,6 @@ const Channels = () => {
   const [activeChannel, setActiveChannel] = useState(initChannel);
   const [showDeleteWindow, setShowDeleteWindow] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [updateChannel, setUpdateChannel] = useState(null);
   const [showRenameWindow, setShowRenameWindow] = useState(false);
 
   const dispatch = useDispatch();
@@ -48,9 +46,9 @@ const Channels = () => {
     const handleNewChannel = (payload) => {
       dispatch(addChanel(payload));
     };
-  
+
     socket.on('newChannel', handleNewChannel);
-  
+
     return () => {
       socket.off('newChannel', handleNewChannel);
     };
