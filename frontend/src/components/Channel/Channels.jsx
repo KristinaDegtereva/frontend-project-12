@@ -9,6 +9,7 @@ import { addChanel, getChannels } from '../../slices/channelSlice';
 import CreateChannel from './CreateChannel';
 import DeleteChannel from './DeleteChannel';
 import RenameChannel from './RenameChannel';
+import socket from '../../socket';
 
 const Channels = () => {
   const { t } = useTranslation();
@@ -44,18 +45,16 @@ const Channels = () => {
   };
 
   useEffect(() => {
-    const socket = io();
-    socket.on('newChannel', (payload) => {
-      setUpdateChannel(payload);
-    });
-    return (next) => (action) => next(action);
-  }, []);
-
-  useEffect(() => {
-    if (updateChannel) {
-      dispatch(addChanel(updateChannel));
-    }
-  }, [updateChannel]);
+    const handleNewChannel = (payload) => {
+      dispatch(addChanel(payload));
+    };
+  
+    socket.on('newChannel', handleNewChannel);
+  
+    return () => {
+      socket.off('newChannel', handleNewChannel);
+    };
+  }, [dispatch]);
 
   return (
     <>

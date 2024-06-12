@@ -52,7 +52,7 @@ const CreateChannel = ({ setShowModal, setActiveChannel }) => {
       } catch (e) {
         console.log(e);
         toast.error(t('toasts.errorCreate'));
-        rollbar.error('Create channel', e);
+        rollbar.error(t('rollbar.createChannel'), e);
       }
     },
   });

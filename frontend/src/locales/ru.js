@@ -65,6 +65,14 @@ const translation = {
       successRemove: 'Канал удалён',
       errorRemove: 'Не удалось удалить',
     },
+    rollbar:{
+      createChannel: 'Create channel',
+      deleteChannel: 'Delete channel',
+      sendMessage: 'Send message',
+      renameChannel: 'Rename channel',
+      loginPage: 'Login page',
+      registrationFailed: 'Registration failed',
+    }
   },
 };
 

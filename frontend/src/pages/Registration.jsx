@@ -59,7 +59,7 @@ const Registration = () => {
       } catch (error) {
         console.log(t('errors.networkErr'), error);
         setErr(true);
-        rollbar.error('Registration failed', error);
+        rollbar.error(t('rollbar.registrationFailed'), error);
       }
     },
   });

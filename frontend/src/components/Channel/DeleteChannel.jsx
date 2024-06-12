@@ -46,7 +46,7 @@ const DeleteChannel = ({ channel, setShowDeleteWindow, handleChannel }) => {
     } catch (e) {
       console.log(e);
       toast.error(t('toasts.errorRemove'));
-      rollbar.error('Delete channel', e);
+      rollbar.error(t('rollbar.deleteChannel'), e);
     }
   };
 

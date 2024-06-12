@@ -44,7 +44,7 @@ const Input = ({ channelId }) => {
       })
       .catch((err) => {
         console.log(err);
-        rollbar.error('Send message', e);
+        rollbar.error(t('rollbar.sendMessage'), e);
       });
   };
 

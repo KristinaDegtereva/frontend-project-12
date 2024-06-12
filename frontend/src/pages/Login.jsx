@@ -55,7 +55,7 @@ const Login = () => {
       } catch (error) {
         console.error(t('errors.requestSendErr'), error);
         setError(true);
-        rollbar.error('Login page', error);
+        rollbar.error(t('rollbar.loginPage'), error);
         console.log(error);
       }
     },
