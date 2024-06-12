@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
 import { Form } from 'react-bootstrap';
-import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -11,6 +10,7 @@ import Header from '../components/Header';
 import imageRegistration from '../images/registration.jpg';
 import { setToken, setUserName } from '../slices/authSlice';
 import { appPaths, apiRoutes } from '../routes';
+import { getSignUpSchema } from '../validationSchema';
 
 const Registration = () => {
   const { t } = useTranslation();
@@ -33,31 +33,13 @@ const Registration = () => {
     }
   }, [err]);
 
-  const getSchema = () => yup.object().shape({
-    username: yup
-      .string()
-      .trim()
-      .required(t('errors.required'))
-      .min(3, t('errors.minMax'))
-      .max(20, t('errors.minMax')),
-    password: yup
-      .string()
-      .min(6, t('errors.minSymbols'))
-      .required(t('errors.required')),
-    confirmPassword: yup
-      .string()
-      .label('confirmPassword')
-      .required(t('errors.required'))
-      .oneOf([yup.ref('password'), null], t('errors.matchPassword')),
-  });
-
   const formik = useFormik({
     initialValues: {
       username: '',
       password: '',
       confirmPassword: '',
     },
-    validationSchema: getSchema(),
+    validationSchema: getSignUpSchema(t),
     onSubmit: async (values) => {
       try {
         await axios

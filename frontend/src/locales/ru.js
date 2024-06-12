@@ -27,6 +27,7 @@ const translation = {
       matchPassword: 'Пароли должны совпадать',
       required: 'Обязательное поле',
       uniq: 'Должно быть уникальным',
+      requestSendErr: 'Ошибка при отправке запроса:',
     },
     chat: {
       channels: 'Каналы',

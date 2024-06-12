@@ -9,7 +9,7 @@ import { useRollbar } from '@rollbar/react';
 import leo from 'leo-profanity';
 import { setChannels, getChannels } from '../../slices/channelSlice';
 import 'react-toastify/dist/ReactToastify.css';
-import getSchema from '../../validationSchema';
+import { getNameSchema } from '../../validationSchema';
 import { apiRoutes } from '../../routes';
 
 const RenameChannel = ({ setShowModal, channel }) => {
@@ -40,7 +40,7 @@ const RenameChannel = ({ setShowModal, channel }) => {
     initialValues: {
       name: '' || leo.clean(channel.name),
     },
-    validationSchema: getSchema(names, t),
+    validationSchema: getNameSchema(names, t),
     onSubmit: async (values) => {
       try {
         const editedChannel = { name: values.name };

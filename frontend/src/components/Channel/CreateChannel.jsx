@@ -9,7 +9,7 @@ import { useRollbar } from '@rollbar/react';
 import { setCurrentChannel } from '../../slices/currentChannelSlice';
 import { getChannels } from '../../slices/channelSlice';
 import 'react-toastify/dist/ReactToastify.css';
-import getSchema from '../../validationSchema';
+import { getNameSchema } from '../../validationSchema';
 import { apiRoutes } from '../../routes';
 
 const CreateChannel = ({ setShowModal, setActiveChannel }) => {
@@ -32,7 +32,7 @@ const CreateChannel = ({ setShowModal, setActiveChannel }) => {
     initialValues: {
       name: '',
     },
-    validationSchema: getSchema(names, t),
+    validationSchema: getNameSchema(names, t),
     onSubmit: async (values) => {
       try {
         const newChannel = { name: values.name };

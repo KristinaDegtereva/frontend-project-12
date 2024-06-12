@@ -49,7 +49,7 @@ const Login = () => {
           setError(true);
         }
       } catch (error) {
-        console.error('Ошибка при отправке запроса:', error);
+        console.error(t('errors.requestSendErr'), error);
         setError(true);
         rollbar.error('Login page', error);
         console.log(error);

@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-const getSchema = (names, t) => yup.object().shape({
+export const getNameSchema = (names, t) => yup.object().shape({
   name: yup
     .string()
     .trim()
@@ -10,4 +10,20 @@ const getSchema = (names, t) => yup.object().shape({
     .notOneOf(names, t('errors.uniq')),
 });
 
-export default getSchema;
+export const getSignUpSchema = (t) => yup.object().shape({
+  username: yup
+    .string()
+    .trim()
+    .required(t('errors.required'))
+    .min(3, t('errors.minMax'))
+    .max(20, t('errors.minMax')),
+  password: yup
+    .string()
+    .min(6, t('errors.minSymbols'))
+    .required(t('errors.required')),
+  confirmPassword: yup
+    .string()
+    .label('confirmPassword')
+    .required(t('errors.required'))
+    .oneOf([yup.ref('password'), null], t('errors.matchPassword')),
+});
